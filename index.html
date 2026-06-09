@@ -109,14 +109,6 @@
     }
     @keyframes arrowBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
 
-    /* ── TRUST STRIP ── */
-    .trust { padding: 32px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg2); overflow: hidden; }
-    .trust-label { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; text-align: center; margin-bottom: 20px; }
-    .marquee-wrap { overflow: hidden; }
-    .marquee { display: flex; gap: 60px; width: max-content; animation: marquee 24s linear infinite; }
-    .marquee-item { display: flex; align-items: center; gap: 10px; color: var(--text3); font-size: 14px; font-weight: 700; white-space: nowrap; }
-    .marquee-item svg { opacity: 0.4; }
-    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
     /* ── MANIFESTO ── */
     .manifesto { padding: 140px 0; text-align: center; position: relative; }
@@ -456,22 +448,6 @@
   </div>
 </section>
 
-<!-- ─── TRUST ─── -->
-<div class="trust">
-  <div class="trust-label">Empresas que já confiam na Sintra</div>
-  <div class="marquee-wrap">
-    <div class="marquee" id="marquee">
-      <div class="marquee-item">🖨️ Inprint Gráfica</div>
-      <div class="marquee-item">🎉 Alegria Decora Festas</div>
-      <div class="marquee-item">🖨️ Inprint Gráfica</div>
-      <div class="marquee-item">🎉 Alegria Decora Festas</div>
-      <div class="marquee-item">🖨️ Inprint Gráfica</div>
-      <div class="marquee-item">🎉 Alegria Decora Festas</div>
-      <div class="marquee-item">🖨️ Inprint Gráfica</div>
-      <div class="marquee-item">🎉 Alegria Decora Festas</div>
-    </div>
-  </div>
-</div>
 
 <!-- ─── MANIFESTO ─── -->
 <section class="manifesto">
@@ -1057,6 +1033,15 @@ const LOGO_BLUE = [
 ];
 
 function resize() {
+  const newW = window.innerWidth;
+  // Ignora mudanças só de altura (scroll no iOS muda innerHeight)
+  if (newW === W) return;
+  W = canvas.width = newW;
+  H = canvas.height = window.innerHeight;
+  createScene();
+}
+
+function resizeInit() {
   W = canvas.width = window.innerWidth;
   H = canvas.height = window.innerHeight;
   createScene();
@@ -1293,7 +1278,7 @@ function drawCanvas() {
 }
 
 // ── Init ──
-resize();
+resizeInit();
 window.addEventListener('resize', resize);
 drawCanvas();
 
