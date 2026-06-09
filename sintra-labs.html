@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sintra Labs — Inteligência Artificial para o seu negócio</title>
+  <meta name="description" content="Automação de atendimento, presença digital e soluções com IA. Sua empresa funcionando 24/7.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050810;
+      --bg2: #080d18;
+      --bg3: #0c1428;
+      --surface: rgba(29,107,254,0.04);
+      --surface2: rgba(29,107,254,0.07);
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(29,107,254,0.3);
+      --purple: #1d6bfe;
+      --purple2: #0b1f3d;
+      --cyan: #5ba8ff;
+      --green: #4ade80;
+      --text: #eef2ff;
+      --text2: #7b8fc4;
+      --text3: #3a4d7a;
+      --grad: linear-gradient(135deg, #1d6bfe, #5ba8ff);
+      --grad2: linear-gradient(135deg, #0b1f3d, #1d6bfe);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.6; overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* ── UTILS ── */
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .gt { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 5px 14px; border-radius: 100px;
+      border: 1px solid var(--border); background: var(--surface);
+      font-size: 11px; font-weight: 600; color: var(--text2);
+      letter-spacing: 0.07em; text-transform: uppercase;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--grad); flex-shrink: 0; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 10px; font-size: 14px;
+      font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: all 0.2s; border: none; font-family: inherit;
+    }
+    .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 0 24px rgba(29,107,254,0.35); }
+    .btn-primary:hover { box-shadow: 0 0 40px rgba(29,107,254,0.55); transform: translateY(-2px); }
+    .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--border2); color: var(--text); }
+    .btn-lg { padding: 15px 30px; font-size: 15px; border-radius: 12px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 64px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 40px;
+      background: rgba(5,5,12,0.6); backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo .logo-text { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+    .nav-links { display: flex; gap: 34px; list-style: none; }
+    .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 64px; }
+    #heroCanvas { position: absolute; inset: 0; z-index: 0; }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 70% 80% at 30% 50%, black, transparent);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 780px; }
+    .hero-eyebrow { margin-bottom: 28px; }
+    .hero h1 {
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 900; line-height: 1.0; letter-spacing: -0.045em;
+      margin-bottom: 28px;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px); color: var(--text2); line-height: 1.7;
+      max-width: 540px; margin-bottom: 44px; font-weight: 400;
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 72px; }
+    .scroll-hint {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3);
+    }
+    .scroll-arrow {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--border); display: flex; align-items: center;
+      justify-content: center; font-size: 12px;
+      animation: arrowBounce 2s ease-in-out infinite;
+    }
+    @keyframes arrowBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
+
+    /* ── TRUST STRIP ── */
+    .trust { padding: 32px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg2); overflow: hidden; }
+    .trust-label { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; text-align: center; margin-bottom: 20px; }
+    .marquee-wrap { overflow: hidden; }
+    .marquee { display: flex; gap: 60px; width: max-content; animation: marquee 24s linear infinite; }
+    .marquee-item { display: flex; align-items: center; gap: 10px; color: var(--text3); font-size: 14px; font-weight: 700; white-space: nowrap; }
+    .marquee-item svg { opacity: 0.4; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── MANIFESTO ── */
+    .manifesto { padding: 140px 0; text-align: center; position: relative; }
+    .manifesto::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 800px; height: 500px;
+      background: radial-gradient(ellipse, rgba(11,31,61,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .manifesto h2 {
+      font-size: clamp(40px, 6vw, 72px); font-weight: 900;
+      letter-spacing: -0.04em; line-height: 1.05;
+      max-width: 800px; margin: 16px auto 24px; position: relative;
+    }
+    .manifesto p { font-size: 18px; color: var(--text2); max-width: 560px; margin: 0 auto; line-height: 1.7; position: relative; }
+
+    /* ── SECTION GENERIC ── */
+    section { padding: 100px 0; }
+    .section-header { margin-bottom: 72px; }
+    .section-header h2 { font-size: clamp(36px, 5vw, 58px); font-weight: 900; letter-spacing: -0.035em; line-height: 1.08; margin-top: 14px; }
+    .section-header p { color: var(--text2); max-width: 520px; margin-top: 16px; font-size: 17px; line-height: 1.7; }
+
+    /* ── FEATURES (NUMBERED) ── */
+    .features-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .features-intro { text-align: center; margin-bottom: 100px; }
+    .feature-block {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center; padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+    .feature-block:first-of-type { border-top: none; }
+    .feature-block.reverse { direction: rtl; }
+    .feature-block.reverse > * { direction: ltr; }
+    .feat-num {
+      font-size: 80px; font-weight: 900; line-height: 1;
+      letter-spacing: -0.05em;
+      background: var(--grad); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+      opacity: 0.5; margin-bottom: 4px;
+    }
+    .feat-tag {
+      display: inline-block; padding: 3px 10px; border-radius: 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      background: rgba(29,107,254,0.1); color: #7ab8ff;
+      border: 1px solid rgba(29,107,254,0.2); margin-bottom: 16px;
+    }
+    .feat-text h3 { font-size: clamp(28px, 3.5vw, 40px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+    .feat-text p { font-size: 16px; color: var(--text2); line-height: 1.7; }
+
+    /* UI MOCKUPS */
+    .mockup {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 20px; padding: 24px; position: relative; overflow: hidden;
+    }
+    .mockup::before {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(29,107,254,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .mockup-bar { display: flex; gap: 6px; margin-bottom: 20px; }
+    .dot-btn { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-btn:nth-child(1) { background: #ff5f57; }
+    .dot-btn:nth-child(2) { background: #ffbd2e; }
+    .dot-btn:nth-child(3) { background: #28ca41; }
+
+    /* Mockup: Chat */
+    .chat-msgs { display: flex; flex-direction: column; gap: 10px; }
+    .cm { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5; max-width: 88%; }
+    .cm-user { background: rgba(29,107,254,0.15); border: 1px solid rgba(29,107,254,0.2); align-self: flex-end; border-radius: 12px 12px 2px 12px; }
+    .cm-bot { background: var(--surface); border: 1px solid var(--border); align-self: flex-start; border-radius: 12px 12px 12px 2px; color: var(--text2); }
+    .cm-bot strong { color: var(--purple); }
+    .cm-typing { display: flex; gap: 4px; align-items: center; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px 12px 12px 2px; width: fit-content; }
+    .td { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); animation: tdBounce 1.3s infinite; }
+    .td:nth-child(2) { animation-delay: 0.2s; }
+    .td:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes tdBounce { 0%,100%{transform:translateY(0);opacity:0.4} 50%{transform:translateY(-5px);opacity:1} }
+
+    /* Mockup: Flow */
+    .flow-nodes { display: flex; flex-direction: column; gap: 10px; }
+    .fn {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; font-size: 13px;
+    }
+    .fn-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+    .fn-icon.purple { background: rgba(29,107,254,0.15); }
+    .fn-icon.cyan { background: rgba(91,168,255,0.12); }
+    .fn-icon.green { background: rgba(74,222,128,0.12); }
+    .fn-icon.orange { background: rgba(251,146,60,0.12); }
+    .fn-label { flex: 1; }
+    .fn-label strong { display: block; font-size: 12px; font-weight: 600; }
+    .fn-label span { font-size: 11px; color: var(--text3); }
+    .fn-status { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+    .status-done { background: rgba(74,222,128,0.12); color: #4ade80; }
+    .status-run { background: rgba(29,107,254,0.12); color: #7ab8ff; }
+    .status-wait { background: rgba(255,255,255,0.04); color: var(--text3); }
+    .fn-arrow { display: flex; justify-content: center; color: var(--text3); font-size: 12px; }
+
+    /* Mockup: Stats Dashboard */
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+    .stat-box-label { font-size: 10px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+    .stat-box-val { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; }
+    .stat-box-sub { font-size: 11px; color: var(--green); margin-top: 2px; }
+    .mini-bar { display: flex; gap: 3px; align-items: flex-end; height: 40px; margin-top: 12px; }
+    .mb { border-radius: 3px 3px 0 0; background: rgba(29,107,254,0.3); width: 100%; transition: height 0.5s; }
+    .mb.active { background: var(--grad); }
+
+    /* Mockup: Site Preview */
+    .site-preview { border-radius: 10px; overflow: hidden; }
+    .sp-bar { background: var(--bg); padding: 8px 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+    .sp-url { background: rgba(255,255,255,0.04); border-radius: 4px; padding: 4px 10px; font-size: 10px; color: var(--text3); flex: 1; }
+    .sp-body { padding: 16px; background: var(--bg2); }
+    .sp-hero { background: var(--grad); border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+    .sp-hero-h { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .sp-hero-s { font-size: 11px; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+    .sp-cta { background: rgba(255,255,255,0.2); color: #fff; font-size: 10px; font-weight: 700; padding: 5px 12px; border-radius: 5px; display: inline-block; }
+    .sp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .sp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px; }
+    .sp-card-icon { font-size: 16px; margin-bottom: 4px; }
+    .sp-card-title { font-size: 9px; font-weight: 700; margin-bottom: 2px; }
+    .sp-card-text { font-size: 9px; color: var(--text3); line-height: 1.4; }
+
+    /* ── SERVICES ── */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .svc-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px 30px;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .svc-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(29,107,254,0.08) 0%, rgba(91,168,255,0.04) 100%); opacity: 0; transition: opacity 0.3s; border-radius: inherit; }
+    .svc-card:hover { border-color: var(--border2); transform: translateY(-5px); }
+    .svc-card:hover::before { opacity: 1; }
+    .svc-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--grad); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px; position: relative; }
+    .svc-card h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; position: relative; }
+    .svc-card p { font-size: 14px; color: var(--text2); line-height: 1.65; position: relative; }
+    .svc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; position: relative; }
+    .tag { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; background: rgba(29,107,254,0.08); color: #7ab8ff; border: 1px solid rgba(29,107,254,0.18); }
+
+    /* ── PROCESS ── */
+    .process-section { background: var(--bg2); border-top: 1px solid var(--border); }
+    .process-steps { display: flex; flex-direction: column; gap: 0; }
+    .ps {
+      display: grid; grid-template-columns: 80px 1fr; gap: 32px;
+      padding: 32px 0; border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .ps:last-child { border-bottom: none; }
+    .ps-num { font-size: 48px; font-weight: 900; letter-spacing: -0.05em; color: var(--text3); line-height: 1; padding-top: 4px; }
+    .ps-content { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+    .ps-tag { display: inline-block; padding: 2px 9px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(29,107,254,0.1); color: #7ab8ff; border: 1px solid rgba(29,107,254,0.2); margin-bottom: 8px; }
+    .ps-content h3 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .ps-content p { font-size: 14px; color: var(--text2); line-height: 1.65; }
+    .ps-meta { font-size: 12px; color: var(--text3); margin-top: 8px; font-weight: 500; }
+    .ps-visual { background: rgba(29,107,254,0.06); border: 1px solid rgba(29,107,254,0.12); border-radius: 12px; padding: 16px; font-size: 13px; color: var(--text2); }
+
+    /* ── TEAM ── */
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .team-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: all 0.3s; }
+    .team-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+    .team-photo { height: 380px; background: var(--bg3); position: relative; overflow: hidden; }
+    .team-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.4s ease; }
+    .team-card:hover .team-photo img { transform: scale(1.04); }
+    .team-photo::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px; background: linear-gradient(transparent, var(--bg3)); }
+    .team-info { padding: 20px 24px; }
+    .team-name { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .team-role { font-size: 13px; color: var(--text2); margin-bottom: 12px; }
+    .team-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .team-tag { padding: 3px 9px; border-radius: 5px; font-size: 11px; background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+
+    /* ── STATS ── */
+    .stats-section { padding: 100px 0; text-align: center; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-top: 60px; }
+    .stat-item { background: var(--bg2); padding: 48px 32px; }
+    .stat-val { font-size: clamp(40px, 5vw, 64px); font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+    .stat-label { font-size: 14px; color: var(--text2); margin-top: 8px; }
+
+    /* ── PLANS ── */
+    .plans-section { background: var(--bg2); border-top: 1px solid var(--border); }
+    .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .plan-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px 30px; display: flex; flex-direction: column; transition: all 0.3s; }
+    .plan-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+    .plan-card.featured { background: linear-gradient(160deg, rgba(11,31,61,0.12) 0%, rgba(91,168,255,0.04) 100%); border-color: rgba(29,107,254,0.35); position: relative; }
+    .featured-pill { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--grad); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 16px; border-radius: 100px; white-space: nowrap; letter-spacing: 0.05em; }
+    .plan-tier { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+    .plan-name { font-size: 28px; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 8px; }
+    .plan-desc { font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 28px; }
+    .plan-price-block { margin-bottom: 24px; }
+    .plan-price-note { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
+    .plan-price-val { font-size: 14px; font-weight: 600; color: var(--text2); }
+    .plan-divider { height: 1px; background: var(--border); margin-bottom: 24px; }
+    .plan-feats { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .pf { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text2); line-height: 1.5; }
+    .pf-check { width: 18px; height: 18px; border-radius: 50%; background: rgba(29,107,254,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; margin-top: 1px; color: #7ab8ff; }
+    .plan-action { margin-top: 28px; }
+    .btn-full { width: 100%; justify-content: center; padding: 13px; border-radius: 12px; font-size: 14px; }
+
+    /* ── FAQ ── */
+    .faq-section { max-width: 780px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      width: 100%; background: none; border: none; color: var(--text);
+      font-family: inherit; font-size: 16px; font-weight: 600;
+      text-align: left; padding: 24px 0; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      transition: color 0.2s;
+    }
+    .faq-q:hover { color: var(--purple); }
+    .faq-icon { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s; }
+    .faq-icon svg { width: 12px; height: 12px; transition: transform 0.3s; }
+    .faq-item.open .faq-icon svg { transform: rotate(45deg); }
+    .faq-item.open .faq-icon { background: rgba(29,107,254,0.1); border-color: var(--border2); color: var(--purple); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-a-inner { padding-bottom: 24px; font-size: 15px; color: var(--text2); line-height: 1.75; }
+
+    /* ── CTA DARK ── */
+    .cta-dark {
+      padding: 100px 0; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, rgba(11,31,61,0.15) 0%, rgba(91,168,255,0.06) 100%);
+      border-top: 1px solid rgba(29,107,254,0.15);
+    }
+    .cta-dark::before {
+      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(11,31,61,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner { text-align: center; position: relative; }
+    .cta-inner h2 { font-size: clamp(40px, 6vw, 68px); font-weight: 900; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 20px; }
+    .cta-inner p { font-size: 18px; color: var(--text2); max-width: 480px; margin: 0 auto 40px; line-height: 1.7; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; }
+    .cta-note { font-size: 12px; color: var(--text3); margin-top: 16px; }
+
+    /* ── CONTACT FORM ── */
+    .contact-section { background: var(--bg2); border-top: 1px solid var(--border); }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+    .contact-left h2 { font-size: clamp(32px, 4vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+    .contact-left p { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 32px; }
+    .contact-info { display: flex; flex-direction: column; gap: 12px; }
+    .ci { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text2); }
+    .ci-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(29,107,254,0.1); border: 1px solid rgba(29,107,254,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group label { font-size: 12px; font-weight: 600; color: var(--text2); letter-spacing: 0.05em; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 16px; font-size: 14px;
+      color: var(--text); font-family: inherit; outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text3); }
+    .form-group select option { background: #1a1a2e; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: rgba(29,107,254,0.5); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit { background: var(--grad); color: #fff; border: none; border-radius: 12px; padding: 15px 28px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; box-shadow: 0 0 24px rgba(29,107,254,0.3); }
+    .form-submit:hover { box-shadow: 0 0 40px rgba(29,107,254,0.5); transform: translateY(-1px); }
+    .form-note { font-size: 11px; color: var(--text3); text-align: center; }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 48px 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; color: var(--text3); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text2); }
+    .footer-right { font-size: 12px; color: var(--text3); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-up.vis { opacity: 1; transform: translateY(0); }
+    .fade-up-d1 { transition-delay: 0.1s; }
+    .fade-up-d2 { transition-delay: 0.2s; }
+    .fade-up-d3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .feature-block, .feature-block.reverse { grid-template-columns: 1fr; direction: ltr; gap: 40px; }
+      .ps-content { grid-template-columns: 1fr; }
+      .ps { grid-template-columns: 1fr; gap: 8px; }
+      .ps-num { font-size: 32px; }
+      .services-grid, .plans-grid, .team-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+      .cta-btns { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <svg viewBox="27 16 45 70" xmlns="http://www.w3.org/2000/svg" height="34" style="flex-shrink:0;">
+      <polygon fill="white" points="55.4,20.4 30.8,34.5 29.3,35.3 29.3,43.6 29.3,51.8 30.4,52.5 36.0,55.7 40.3,58.4 43.0,56.9 51.1,52.0 42.6,46.4 40.3,44.9 40.6,43.1 56.7,33.6 59.7,31.9 59.7,25.0 59.6,18.1"/>
+      <polygon fill="#1d6bfe" points="58.1,47.9 58.0,56.3 54.5,58.4 47.6,62.6 41.3,66.3 38.1,68.3 37.9,75.4 37.9,82.7 38.3,82.8 43.5,79.6 52.1,74.4 62.7,68.1 69.7,63.8 69.9,55.0 69.9,46.5 68.2,45.4 58.3,39.5"/>
+    </svg>
+    <span class="logo-text"><span style="font-weight:700;">Sintra</span><span style="font-weight:400;"> Labs</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#solucao">Solução</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#processo">Processo</a></li>
+    <li><a href="#planos">Planos</a></li>
+    <li><a href="#contato">Time</a></li>
+  </ul>
+  <a href="#diagnostico" class="btn btn-primary">Fale conosco</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="badge"><span class="badge-dot"></span>Inteligência Artificial Aplicada</span>
+      </div>
+      <h1>Seu negócio<br><span class="gt">nunca para.</span></h1>
+      <p class="hero-sub">Menos processo manual, mais tempo vendendo. Criamos automações de atendimento, presença digital e ferramentas sob medida para que sua operação funcione — mesmo quando você não está.</p>
+      <div class="hero-ctas">
+        <a href="#diagnostico" class="btn btn-primary btn-lg">Quero uma solução →</a>
+        <a href="#solucao" class="btn btn-ghost btn-lg">Conhecer o Sintra Flow</a>
+      </div>
+      <div class="scroll-hint">
+        <div class="scroll-arrow">↓</div>
+        ROLAR
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRUST ─── -->
+<div class="trust">
+  <div class="trust-label">Empresas que já confiam na Sintra</div>
+  <div class="marquee-wrap">
+    <div class="marquee" id="marquee">
+      <div class="marquee-item">🖨️ Inprint Gráfica</div>
+      <div class="marquee-item">🎉 Alegria Decora Festas</div>
+      <div class="marquee-item">🖨️ Inprint Gráfica</div>
+      <div class="marquee-item">🎉 Alegria Decora Festas</div>
+      <div class="marquee-item">🖨️ Inprint Gráfica</div>
+      <div class="marquee-item">🎉 Alegria Decora Festas</div>
+      <div class="marquee-item">🖨️ Inprint Gráfica</div>
+      <div class="marquee-item">🎉 Alegria Decora Festas</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MANIFESTO ─── -->
+<section class="manifesto">
+  <div class="container">
+    <span class="badge fade-up"><span class="badge-dot"></span>Nossa filosofia</span>
+    <h2 class="fade-up">Empresa que não está<br>no digital, não está<br><span class="gt">no mercado.</span></h2>
+    <p class="fade-up fade-up-d1">A Sintra existe para isso: tornar sua operação mais simples, sua presença mais forte e seu crescimento menos dependente de esforço manual.</p>
+  </div>
+</section>
+
+<!-- ─── FEATURES NUMERADAS ─── -->
+<section class="features-section" id="solucao">
+  <div class="container">
+    <div class="features-intro fade-up">
+      <span class="badge"><span class="badge-dot"></span>Sintra Flow</span>
+      <h2 style="font-size:clamp(36px,5vw,58px);font-weight:900;letter-spacing:-0.035em;margin-top:14px;">Nossa metodologia<br><span class="gt">do início ao resultado.</span></h2>
+      <p style="color:var(--text2);max-width:520px;margin:16px auto 0;font-size:17px;line-height:1.7;">Cada projeto segue um processo claro — do diagnóstico à entrega — para que você saiba exatamente o que está acontecendo em cada etapa.</p>
+    </div>
+
+    <div class="feature-block fade-up">
+      <div class="feat-text">
+        <div class="feat-num">01</div>
+        <div class="feat-tag">Diagnóstico</div>
+        <h3>Entendemos onde sua operação perde tempo e oportunidade.</h3>
+        <p>Antes de qualquer solução, mapeamos sua operação: onde estão os gargalos, o que está sendo feito manualmente e onde a tecnologia pode gerar impacto real.</p>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar"><div class="dot-btn"></div><div class="dot-btn"></div><div class="dot-btn"></div></div>
+        <div class="flow-nodes">
+          <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.07em;">Diagnóstico — Em andamento</div>
+          <div class="fn">
+            <div class="fn-icon purple">💬</div>
+            <div class="fn-label"><strong>Como é feito o atendimento hoje?</strong><span>WhatsApp manual, sem automação</span></div>
+            <div class="fn-status status-done">✓ Mapeado</div>
+          </div>
+          <div class="fn">
+            <div class="fn-icon cyan">📉</div>
+            <div class="fn-label"><strong>Quantos leads perdem por demora?</strong><span>~40% sem retorno em 24h</span></div>
+            <div class="fn-status status-done">✓ Mapeado</div>
+          </div>
+          <div class="fn">
+            <div class="fn-icon green">🔁</div>
+            <div class="fn-label"><strong>Processos feitos manualmente?</strong><span>Agendamentos, follow-ups, relatórios</span></div>
+            <div class="fn-status status-run">● Analisando</div>
+          </div>
+          <div class="fn">
+            <div class="fn-icon orange">🌐</div>
+            <div class="fn-label"><strong>Presença digital atual?</strong><span>Aguardando resposta</span></div>
+            <div class="fn-status status-wait">Em fila</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-block reverse fade-up">
+      <div class="feat-text">
+        <div class="feat-num">02</div>
+        <div class="feat-tag">Estratégia</div>
+        <h3>Definimos o que construir — e o que não construir.</h3>
+        <p>Com o diagnóstico em mãos, traçamos o plano: o que automatizar, o que desenvolver e em qual ordem. Sem escopo inflado, sem promessa que não entrega.</p>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar"><div class="dot-btn"></div><div class="dot-btn"></div><div class="dot-btn"></div></div>
+        <div class="flow-nodes">
+          <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.07em;">Plano de execução</div>
+          <div class="fn">
+            <div class="fn-icon purple">🎯</div>
+            <div class="fn-label"><strong>Automação de atendimento</strong><span>Semana 1 — Prioridade alta</span></div>
+            <div class="fn-status status-done">✓ Definido</div>
+          </div>
+          <div class="fn-arrow">↓</div>
+          <div class="fn">
+            <div class="fn-icon cyan">🔗</div>
+            <div class="fn-label"><strong>Integração WhatsApp + CRM</strong><span>Semana 2 — Prioridade alta</span></div>
+            <div class="fn-status status-done">✓ Definido</div>
+          </div>
+          <div class="fn-arrow">↓</div>
+          <div class="fn">
+            <div class="fn-icon green">🌐</div>
+            <div class="fn-label"><strong>Site institucional</strong><span>Semana 3 — Prioridade média</span></div>
+            <div class="fn-status status-run">● Em análise</div>
+          </div>
+          <div class="fn-arrow">↓</div>
+          <div class="fn">
+            <div class="fn-icon orange">🧪</div>
+            <div class="fn-label"><strong>Testes e ajustes finais</strong><span>Semana 4</span></div>
+            <div class="fn-status status-wait">Em fila</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-block fade-up">
+      <div class="feat-text">
+        <div class="feat-num">03</div>
+        <div class="feat-tag">Execução</div>
+        <h3>Desenvolvemos e entregamos. Rápido, sem enrolação.</h3>
+        <p>Automações, sites, integrações — desenvolvidos e implantados com agilidade. Você acompanha o progresso em tempo real e recebe algo funcionando, não um PDF de apresentação.</p>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar"><div class="dot-btn"></div><div class="dot-btn"></div><div class="dot-btn"></div></div>
+        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.07em;">Kanban — Sprint atual</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <div>
+            <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">A fazer</div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:11px;color:var(--text2);">Email automático</div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--text2);">Integração CRM</div>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Em progresso</div>
+            <div style="background:rgba(29,107,254,0.08);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:11px;color:var(--text);">Automação WhatsApp</div>
+            <div style="background:rgba(29,107,254,0.08);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--text);">Site institucional</div>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:700;color:#4ade80;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Concluído</div>
+            <div style="background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.2);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:11px;color:var(--text2);">✓ Diagnóstico</div>
+            <div style="background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.2);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--text2);">✓ Plano de ação</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-block reverse fade-up">
+      <div class="feat-text">
+        <div class="feat-num">04</div>
+        <div class="feat-tag">Acompanhamento</div>
+        <h3>A gente não some depois da entrega.</h3>
+        <p>Monitoramos os resultados, ajustamos o que for necessário e garantimos que a solução continue gerando valor. Porque tecnologia que ninguém acompanha vira despesa.</p>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar"><div class="dot-btn"></div><div class="dot-btn"></div><div class="dot-btn"></div></div>
+        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.07em;">Dashboard — Resultados</div>
+        <div class="stat-grid">
+          <div class="stat-box">
+            <div class="stat-box-label">Atendimentos</div>
+            <div class="stat-box-val gt" id="cnt1">147</div>
+            <div class="stat-box-sub">↑ 23% vs ontem</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-label">Conversão</div>
+            <div class="stat-box-val gt">68%</div>
+            <div class="stat-box-sub">↑ 11% vs semana</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-label">Resp. média</div>
+            <div class="stat-box-val gt">4s</div>
+            <div class="stat-box-sub">⚡ Tempo real</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-label">Leads hoje</div>
+            <div class="stat-box-val gt">34</div>
+            <div class="stat-box-sub">↑ 8 novos</div>
+          </div>
+        </div>
+        <div class="mini-bar" style="margin-top:14px">
+          <div class="mb" style="height:30%"></div><div class="mb" style="height:45%"></div>
+          <div class="mb" style="height:60%"></div><div class="mb" style="height:40%"></div>
+          <div class="mb" style="height:70%"></div><div class="mb" style="height:55%"></div>
+          <div class="mb" style="height:80%"></div><div class="mb active" style="height:90%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="servicos">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="badge"><span class="badge-dot"></span>O que fazemos</span>
+      <h2>Soluções que <span class="gt">geram resultado</span></h2>
+      <p>Não entregamos tecnologia. Entregamos crescimento com tecnologia como meio.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc-card fade-up">
+        <div class="svc-icon">🌐</div>
+        <h3>Presença Digital</h3>
+        <p>Sites institucionais, landing pages e e-commerce que comunicam valor, geram confiança e convertem visitantes em clientes.</p>
+        <div class="svc-tags"><span class="tag">Sites</span><span class="tag">Landing Pages</span><span class="tag">E-commerce</span></div>
+      </div>
+      <div class="svc-card fade-up fade-up-d1">
+        <div class="svc-icon">🤖</div>
+        <h3>Automação com IA</h3>
+        <p>Atendimento automatizado, qualificação de leads, geração de orçamentos e integração com seus sistemas — funcionando 24/7.</p>
+        <div class="svc-tags"><span class="tag">Chatbots</span><span class="tag">Automação</span><span class="tag">IA Generativa</span></div>
+      </div>
+      <div class="svc-card fade-up fade-up-d2">
+        <div class="svc-icon">🚀</div>
+        <h3>Estratégia & Produto</h3>
+        <p>Da ideia ao MVP — arquitetura, modelo de negócio, posicionamento e estratégia de go-to-market para seu produto digital.</p>
+        <div class="svc-tags"><span class="tag">MVP</span><span class="tag">SaaS</span><span class="tag">Consultoria</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCESS ─── -->
+<section id="processo" class="process-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="badge"><span class="badge-dot"></span>Processo</span>
+      <h2>Soluções digitais para empresas<br><span class="gt">operarem melhor.</span></h2>
+      <p>Sites, automações e IA trabalhando juntos para organizar o primeiro contato, acelerar vendas e reduzir gargalos internos.</p>
+    </div>
+    <div class="process-steps">
+      <div class="ps fade-up">
+        <div class="ps-num">01</div>
+        <div class="ps-content">
+          <div>
+            <div class="ps-tag">DIAGNÓSTICO</div>
+            <h3>Mapeamos onde está o gargalo.</h3>
+            <p>60 minutos com um sócio da Sintra. Você sai com o escopo claro, onde a IA vai gerar mais retorno e o que vai ser entregue.</p>
+            <div class="ps-meta">⏱ 60 min — Sem custo, sem compromisso</div>
+          </div>
+          <div class="ps-visual">
+            <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:8px;">● Diagnóstico em andamento</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.6;">Identificando gargalos em atendimento, orçamentos e qualificação de leads...</div>
+          </div>
+        </div>
+      </div>
+      <div class="ps fade-up">
+        <div class="ps-num">02</div>
+        <div class="ps-content">
+          <div>
+            <div class="ps-tag">PROPOSTA</div>
+            <h3>Escopo, prazo e ROI estimado.</h3>
+            <p>Em até 48h você recebe uma proposta com o que será construído, quanto vai custar, quando vai ser entregue e o retorno esperado.</p>
+            <div class="ps-meta">📄 48 horas — Proposta detalhada com ROI</div>
+          </div>
+          <div class="ps-visual" style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text2)">Solução</span><span style="color:var(--text)">Sintra Flow — Atendimento</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text2)">Prazo</span><span style="color:var(--text)">2 semanas</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text2)">ROI estimado</span><span style="color:var(--green)">+38% conversão</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ps fade-up">
+        <div class="ps-num">03</div>
+        <div class="ps-content">
+          <div>
+            <div class="ps-tag">BUILD</div>
+            <h3>Construímos e testamos com você.</h3>
+            <p>Desenvolvimento iterativo com checkpoints semanais. Você vê o progresso em tempo real e aprova cada etapa antes de avançar.</p>
+            <div class="ps-meta">🛠 1–3 semanas — Dependendo do escopo</div>
+          </div>
+          <div class="ps-visual">
+            <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Progresso atual</div>
+            <div style="background:var(--border);border-radius:4px;height:6px;margin-bottom:6px"><div style="background:var(--grad);height:100%;width:70%;border-radius:4px"></div></div>
+            <div style="font-size:11px;color:var(--text3)">70% — Integração com WhatsApp concluída</div>
+          </div>
+        </div>
+      </div>
+      <div class="ps fade-up">
+        <div class="ps-num">04</div>
+        <div class="ps-content">
+          <div>
+            <div class="ps-tag">VALIDAÇÃO</div>
+            <h3>30 dias acompanhando os primeiros resultados.</h3>
+            <p>Depois de entregar, ficamos 30 dias ajustando, corrigindo e garantindo que a solução está gerando o impacto esperado.</p>
+            <div class="ps-meta">✅ 30 dias — Suporte pós-entrega incluso</div>
+          </div>
+          <div class="ps-visual" style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;gap:8px;align-items:center;font-size:12px"><span style="color:var(--green)">✓</span><span style="color:var(--text2)">Atendimento ativo — 147 interações</span></div>
+            <div style="display:flex;gap:8px;align-items:center;font-size:12px"><span style="color:var(--green)">✓</span><span style="color:var(--text2)">Conversão: 68% vs 42% anterior</span></div>
+            <div style="display:flex;gap:8px;align-items:center;font-size:12px"><span style="color:var(--purple)">●</span><span style="color:var(--text2)">Otimizando fluxo de orçamentos...</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ps fade-up">
+        <div class="ps-num">05</div>
+        <div class="ps-content">
+          <div>
+            <div class="ps-tag">EVOLUÇÃO</div>
+            <h3>Cresce conforme o retorno aparece.</h3>
+            <p>Para quem quer uma parceria contínua — evoluímos a solução, adicionamos novos fluxos e mantemos tudo funcionando.</p>
+            <div class="ps-meta">∞ Recorrente — Parceria estratégica mensal</div>
+          </div>
+          <div class="ps-visual">
+            <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">Próximas evoluções</div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:11px;color:var(--text3)">
+              <div>→ Integração com CRM</div>
+              <div>→ Módulo de recompra automática</div>
+              <div>→ Dashboard de relatórios avançado</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TEAM ─── -->
+<section id="contato">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="badge"><span class="badge-dot"></span>Time</span>
+      <h2>Feito por quem <span class="gt">entende negócio.</span></h2>
+      <p>Não somos só devs. Somos produto, jurídico e financeiro — o que uma empresa de soluções precisa ter internamente.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-up">
+        <div class="team-photo"><img src="rafaelresolução.png" alt="Rafael" onerror="this.style.display='none'"></div>
+        <div class="team-info">
+          <div class="team-name">Rafael Arcângelo</div>
+          <div class="team-role">Fundador & CTO</div>
+          <div class="team-tags">
+            <span class="team-tag">Tecnologia</span>
+            <span class="team-tag">Design</span>
+            <span class="team-tag">IA</span>
+            <span class="team-tag">Produto</span>
+          </div>
+        </div>
+      </div>
+      <div class="team-card fade-up fade-up-d1">
+        <div class="team-photo"><img src="matheus.jpeg" alt="Matheus" onerror="this.style.display='none'"></div>
+        <div class="team-info">
+          <div class="team-name">Matheus Riccó</div>
+          <div class="team-role">Co-fundador & CFO</div>
+          <div class="team-tags">
+            <span class="team-tag">Financeiro</span>
+            <span class="team-tag">Contabilidade</span>
+          </div>
+        </div>
+      </div>
+      <div class="team-card fade-up fade-up-d2">
+        <div class="team-photo"><img src="vinicius.jpeg" alt="Vinicius" onerror="this.style.display='none'"></div>
+        <div class="team-info">
+          <div class="team-name">Vinicius Matosinhos</div>
+          <div class="team-role">Co-fundador & CEO</div>
+          <div class="team-tags">
+            <span class="team-tag">Comercial</span>
+            <span class="team-tag">Contratos</span>
+            <span class="team-tag">Direito</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS ─── -->
+<section class="stats-section">
+  <div class="container">
+    <span class="badge fade-up"><span class="badge-dot"></span>Números</span>
+    <div class="stats-grid fade-up">
+      <div class="stat-item">
+        <div class="stat-val gt"><span class="counter" data-target="24">0</span>h</div>
+        <div class="stat-label">Operação sem parar — 365 dias por ano</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val gt"><span class="counter" data-target="48">0</span>h</div>
+        <div class="stat-label">Da ideia à primeira entrega funcional</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val gt"><span class="counter" data-target="3">0</span>x</div>
+        <div class="stat-label">Mais rápido que atendimento humano médio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PLANS ─── -->
+<section id="planos" class="plans-section">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:center">
+      <span class="badge"><span class="badge-dot"></span>Planos</span>
+      <h2>Escolha o <span class="gt">seu ritmo</span></h2>
+      <p style="margin-left:auto;margin-right:auto">De projetos pontuais a uma parceria estratégica — temos o plano certo para cada momento.</p>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card fade-up">
+        <div class="plan-tier">Plano</div>
+        <div class="plan-name">Start</div>
+        <p class="plan-desc">Para quem quer dar o primeiro passo na digitalização com resultado rápido e sem risco.</p>
+        <div class="plan-price-block"><div class="plan-price-note">A partir de</div><div class="plan-price-val">Sob consulta</div></div>
+        <div class="plan-divider"></div>
+        <div class="plan-feats">
+          <div class="pf"><div class="pf-check">✓</div>Landing page profissional</div>
+          <div class="pf"><div class="pf-check">✓</div>Integração com WhatsApp</div>
+          <div class="pf"><div class="pf-check">✓</div>Domínio e hospedagem</div>
+          <div class="pf"><div class="pf-check">✓</div>SEO básico</div>
+          <div class="pf"><div class="pf-check">✓</div>Suporte por 30 dias</div>
+        </div>
+        <div class="plan-action"><a href="#diagnostico" class="btn btn-ghost btn-full">Começar com Start</a></div>
+      </div>
+      <div class="plan-card featured fade-up fade-up-d1">
+        <div class="featured-pill">Mais escolhido</div>
+        <div class="plan-tier">Plano</div>
+        <div class="plan-name gt">Pro</div>
+        <p class="plan-desc">Para quem quer automação real e uma presença digital que trabalha por você 24/7.</p>
+        <div class="plan-price-block"><div class="plan-price-note">A partir de</div><div class="plan-price-val">Sob consulta</div></div>
+        <div class="plan-divider"></div>
+        <div class="plan-feats">
+          <div class="pf"><div class="pf-check">✓</div>Tudo do Start, mais:</div>
+          <div class="pf"><div class="pf-check">✓</div>Site com múltiplas páginas</div>
+          <div class="pf"><div class="pf-check">✓</div>Google Analytics + Pixel</div>
+          <div class="pf"><div class="pf-check">✓</div>Captação de leads</div>
+          <div class="pf"><div class="pf-check">✓</div>Suporte por 60 dias</div>
+        </div>
+        <div class="plan-action"><a href="#diagnostico" class="btn btn-primary btn-full">Quero o Pro →</a></div>
+      </div>
+      <div class="plan-card fade-up fade-up-d2">
+        <div class="plan-tier">Plano</div>
+        <div class="plan-name">Smart</div>
+        <p class="plan-desc">Operação digital no piloto automático — estratégia, produto e IA em parceria contínua.</p>
+        <div class="plan-price-block"><div class="plan-price-note">Parceria mensal</div><div class="plan-price-val">Sob consulta</div></div>
+        <div class="plan-divider"></div>
+        <div class="plan-feats">
+          <div class="pf"><div class="pf-check">✓</div>Tudo do Pro, mais:</div>
+          <div class="pf"><div class="pf-check">✓</div>Site completo e personalizado</div>
+          <div class="pf"><div class="pf-check">✓</div>Animações e experiência premium</div>
+          <div class="pf"><div class="pf-check">✓</div>Consultoria mensal</div>
+          <div class="pf"><div class="pf-check">✓</div>Reuniões quinzenais</div>
+          <div class="pf"><div class="pf-check">✓</div>SLA garantido</div>
+        </div>
+        <div class="plan-action"><a href="#diagnostico" class="btn btn-ghost btn-full">Falar sobre Smart</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:60px" class="fade-up">
+      <span class="badge"><span class="badge-dot"></span>Dúvidas frequentes</span>
+      <h2 style="font-size:clamp(36px,5vw,58px);font-weight:900;letter-spacing:-0.035em;margin-top:14px;">Perguntas frequentes.</h2>
+    </div>
+    <div class="faq-section fade-up">
+      <div class="faq-item">
+        <button class="faq-q">Minha empresa pequena pode contratar? <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="0" x2="6" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="6" x2="12" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim. Trabalhamos exatamente com pequenos e médios negócios. Não é preciso ter estrutura grande nem orçamento de multinacional. Se você tem clientes e quer crescer, a gente consegue te ajudar.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Quanto tempo leva para ter meu site no ar? <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="0" x2="6" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="6" x2="12" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+        <div class="faq-a"><div class="faq-a-inner">Depende do plano e da complexidade do projeto. Os prazos variam de acordo com a exigência do cliente. Em média, os projetos ficam prontos de 7 a 15 dias após a aprovação do briefing e recebimento dos materiais.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Preciso entender de tecnologia para trabalhar com vocês? <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="0" x2="6" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="6" x2="12" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+        <div class="faq-a"><div class="faq-a-inner">Não. Nossa função é justamente cuidar de tudo isso por você. Você nos conta o que precisa, a gente traduz em solução. Sem jargão técnico, sem complicação.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">O site fica no meu nome após a entrega? <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="0" x2="6" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="6" x2="12" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim. O domínio e os arquivos do site são seus. Você não fica preso à Sintra — se um dia quiser migrar ou encerrar o contrato, o projeto vai com você.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Como funciona o pagamento? <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="0" x2="6" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="6" x2="12" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+        <div class="faq-a"><div class="faq-a-inner">O pagamento é combinado no início de cada projeto. Para projetos maiores, trabalhamos com 50% na aprovação do briefing e 50% na entrega. Para projetos menores, o valor pode ser acertado integralmente antes ou após a finalização, conforme alinhado com o cliente.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Posso pedir alterações depois da entrega? <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="0" x2="6" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="6" x2="12" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim, dentro do período de suporte incluso no seu plano. Alterações fora do escopo ou após o período de suporte são orçadas separadamente.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Quando não faz sentido trabalhar conosco? <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="0" x2="6" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="6" x2="12" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+        <div class="faq-a"><div class="faq-a-inner">Se você quer resultado imediato sem nenhum envolvimento, ou precisa de algo pronto em 24 horas, provavelmente não somos a melhor escolha. Nosso trabalho exige um mínimo de alinhamento com o cliente — briefing, materiais e aprovações fazem parte do processo.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA DARK ─── -->
+<section class="cta-dark">
+  <div class="container">
+    <div class="cta-inner fade-up">
+      <span class="badge" style="margin-bottom:24px"><span class="badge-dot"></span>Comece agora</span>
+      <h2>Pronto para sair<br><span class="gt">na frente?</span></h2>
+      <p>Conte o desafio do seu negócio. A gente resolve — com tecnologia, estratégia e velocidade.</p>
+      <div class="cta-btns">
+        <a href="#diagnostico" class="btn btn-primary btn-lg">Quero o diagnóstico gratuito →</a>
+
+      </div>
+      <div class="cta-note">Resposta em até 1 dia útil · Conversa direta com um sócio · Sem custo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT FORM ─── -->
+<section id="diagnostico" class="contact-section">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-left fade-up">
+        <span class="badge" style="margin-bottom:18px"><span class="badge-dot"></span>Diagnóstico gratuito</span>
+        <h2>Comece pelo <span class="gt">diagnóstico.</span></h2>
+        <p>60 minutos com um sócio. Você sai com escopo, prazo e ROI estimado — sem custo, sem compromisso.</p>
+        <div class="contact-info">
+          <div class="ci"><div class="ci-icon">📍</div>Belo Horizonte, MG — Atendimento nacional</div>
+          <div class="ci"><div class="ci-icon">⚡</div>Resposta em até 1 dia útil</div>
+          <div class="ci"><div class="ci-icon">🔒</div>Seus dados são tratados com sigilo e LGPD</div>
+        </div>
+      </div>
+      <div class="form-wrap fade-up fade-up-d1">
+        <form class="form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group"><label>Nome *</label><input type="text" placeholder="Como devemos te chamar" required></div>
+            <div class="form-group"><label>E-mail *</label><input type="email" placeholder="seu@email.com" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Empresa</label><input type="text" placeholder="Nome da empresa"></div>
+            <div class="form-group"><label>WhatsApp</label><input type="tel" placeholder="(31) 99999-9999"></div>
+          </div>
+          <div class="form-group">
+            <label>Setor *</label>
+            <select required>
+              <option value="" disabled selected>Selecione seu setor</option>
+              <option>Gráfica / Impressão</option>
+              <option>Saúde / Clínica</option>
+              <option>Imobiliária</option>
+              <option>E-commerce / Varejo</option>
+              <option>Serviços / Consultoria</option>
+              <option>Eventos / Entretenimento</option>
+              <option>Construção Civil</option>
+              <option>Alimentação</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Qual problema você quer resolver? *</label>
+            <textarea placeholder="Em uma linha: onde seu negócio está perdendo tempo ou dinheiro hoje?" required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Agendar diagnóstico →</button>
+          <div class="form-note">Ao enviar, você concorda com nossa política de privacidade e LGPD.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <svg viewBox="27 16 45 70" xmlns="http://www.w3.org/2000/svg" height="34" style="flex-shrink:0;">
+          <polygon fill="white" points="55.4,20.4 30.8,34.5 29.3,35.3 29.3,43.6 29.3,51.8 30.4,52.5 36.0,55.7 40.3,58.4 43.0,56.9 51.1,52.0 42.6,46.4 40.3,44.9 40.6,43.1 56.7,33.6 59.7,31.9 59.7,25.0 59.6,18.1"/>
+          <polygon fill="#1d6bfe" points="58.1,47.9 58.0,56.3 54.5,58.4 47.6,62.6 41.3,66.3 38.1,68.3 37.9,75.4 37.9,82.7 38.3,82.8 43.5,79.6 52.1,74.4 62.7,68.1 69.7,63.8 69.9,55.0 69.9,46.5 68.2,45.4 58.3,39.5"/>
+        </svg>
+        <span style="font-size:17px;letter-spacing:-0.02em;color:#fff;"><span style="font-weight:700;">Sintra</span><span style="font-weight:400;"> Labs</span></span>
+      </div>
+      <div class="footer-links">
+        <a href="#solucao">Sintra Flow</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#processo">Processo</a>
+        <a href="#planos">Planos</a>
+        <a href="#diagnostico">Diagnóstico</a>
+      </div>
+      <div class="footer-right" style="display:flex;align-items:center;gap:16px;">
+        <a href="https://www.instagram.com/sintralabs/" target="_blank" rel="noopener" aria-label="Instagram da Sintra Labs" style="color:var(--text3);transition:color 0.2s,transform 0.2s;display:flex;align-items:center;" onmouseover="this.style.color='#E1306C';this.style.transform='scale(1.15)'" onmouseout="this.style.color='var(--text3)';this.style.transform='scale(1)'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+        <span>© 2026 Sintra Labs · BH, MG</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── CANVAS HERO (SPACE) ───
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, stars = [], shootingStars = [], nebulae = [], shootTimer = 0, frame = 0, rotation = 0;
+
+// Sintra S logo — exact vertices extracted from official SVG file
+// Coordinates in 0-100 space (normalized from viewBox 635×636 + transform)
+// Center of mark: (49.6, 50.5)
+const LOGO_NAVY = [
+  [55.4, 20.4], [30.8, 34.5], [29.3, 35.3],
+  [29.3, 43.6], [29.3, 51.8], [30.4, 52.5],
+  [36.0, 55.7], [40.3, 58.4], [43.0, 56.9],
+  [51.1, 52.0], [42.6, 46.4], [40.3, 44.9],
+  [40.6, 43.1], [56.7, 33.6], [59.7, 31.9],
+  [59.7, 25.0], [59.6, 18.1]
+];
+const LOGO_BLUE = [
+  [58.1, 47.9], [58.0, 56.3], [54.5, 58.4],
+  [47.6, 62.6], [41.3, 66.3], [38.1, 68.3],
+  [37.9, 75.4], [37.9, 82.7], [38.3, 82.8],
+  [43.5, 79.6], [52.1, 74.4], [62.7, 68.1],
+  [69.7, 63.8], [69.9, 55.0], [69.9, 46.5],
+  [68.2, 45.4], [58.3, 39.5]
+];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  createScene();
+}
+
+function createScene() {
+  stars = [];
+
+  const cx = W / 2, cy = H / 2;
+
+  function makeStar(x, y, isBig, isBlue, dimmer) {
+    // Coordenadas polares a partir do centro — usadas para a órbita
+    const dx = x - cx, dy = y - cy;
+    return {
+      x, y,
+      angle: Math.atan2(dy, dx),
+      dist:  Math.sqrt(dx * dx + dy * dy),
+      size: isBig ? Math.random() * 2.2 + 1.0 : Math.pow(Math.random(), 2.0) * 1.2 + 0.15,
+      baseOpacity: dimmer
+        ? Math.random() * 0.25 + 0.04
+        : Math.random() * 0.60 + (isBig ? 0.45 : 0.12),
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.018 + 0.003,
+      blue: isBlue
+    };
+  }
+
+  // ── Layer 1: campo estelar geral ──
+  const bgCount = Math.min(Math.floor(W * H / 2200), 680);
+  for (let i = 0; i < bgCount; i++) {
+    const x = (Math.random() * 1.4 - 0.2) * W;
+    const y = (Math.random() * 1.4 - 0.2) * H;
+    stars.push(makeStar(x, y, Math.random() > 0.955, Math.random() > 0.65, false));
+  }
+
+  // ── Layer 2: Via Láctea ──
+  const bandCount = Math.min(Math.floor(W * H / 5000), 300);
+  for (let i = 0; i < bandCount; i++) {
+    const t  = Math.random();
+    const bx = (t * 1.4 - 0.2) * W;
+    const by = H * 0.05 + H * 0.88 * t + (Math.random() - 0.5) * H * 0.28;
+    if (by < -H * 0.2 || by > H * 1.2) continue;
+    stars.push(makeStar(bx, by, false, Math.random() > 0.42, true));
+  }
+
+  // ── Nebulosas: cores variadas para profundidade ──
+  nebulae = [
+    // Azul principal (lado da logo)
+    { x: W * 0.82, y: H * 0.38, r: W * 0.48, r1: 29,  g1: 107, b1: 254, a: 0.09 },
+    // Violeta profundo (esquerda)
+    { x: W * 0.08, y: H * 0.52, r: W * 0.40, r1: 72,  g1: 28,  b1: 155, a: 0.07 },
+    // Teal (parte inferior)
+    { x: W * 0.40, y: H * 0.88, r: W * 0.38, r1: 18,  g1: 128, b1: 175, a: 0.05 },
+    // Azul difuso central (atmosfera geral)
+    { x: W * 0.48, y: H * 0.45, r: W * 0.65, r1: 29,  g1: 107, b1: 254, a: 0.03 },
+    // Cluster brilhante (superior esquerdo)
+    { x: W * 0.25, y: H * 0.16, r: W * 0.20, r1: 88,  g1: 168, b1: 255, a: 0.06 },
+    // Toque quente (inferior direito)
+    { x: W * 0.75, y: H * 0.80, r: W * 0.25, r1: 110, g1: 60,  b1: 200, a: 0.04 },
+  ];
+}
+
+function drawLogoWatermark(pulse) {
+  // Scale so the mark fills ~80% of viewport height
+  const s    = (H * 0.80) / 64.7;
+  const size = s * 100;
+  // Right side: right edge of mark sits ~5% off-screen (natural crop)
+  const ox = W * 0.95 - 69.9 * s;
+  const oy = H * 0.50 - 50.5 * s;  // vertically centered
+
+  function poly(pts) {
+    ctx.beginPath();
+    pts.forEach(([x, y], i) => {
+      i === 0 ? ctx.moveTo(ox + x*s, oy + y*s) : ctx.lineTo(ox + x*s, oy + y*s);
+    });
+    ctx.closePath();
+  }
+
+  ctx.save();
+
+  // ── Navy piece — contrasting dark shape ──
+  // Stroke edge so the shape is legible against the dark bg
+  ctx.shadowColor = `rgba(29,107,254,${0.18 + pulse * 0.10})`;
+  ctx.shadowBlur  = 18;
+  poly(LOGO_NAVY);
+  ctx.fillStyle = `rgba(15,38,80,${0.92 + pulse * 0.05})`;
+  ctx.fill();
+  // Thin blue edge so it reads against the background
+  ctx.strokeStyle = `rgba(29,107,254,${0.20 + pulse * 0.12})`;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // ── Blue piece — strong fill + glow ──
+  // Pass 1: wide outer halo
+  ctx.shadowColor = `rgba(29,107,254,${0.60 + pulse * 0.25})`;
+  ctx.shadowBlur  = 70 + pulse * 45;
+  poly(LOGO_BLUE);
+  ctx.fillStyle = `rgba(29,107,254,${0.55 + pulse * 0.12})`;
+  ctx.fill();
+
+  // Pass 2: tighter bright glow
+  ctx.shadowColor = `rgba(91,168,255,${0.75 + pulse * 0.20})`;
+  ctx.shadowBlur  = 25 + pulse * 15;
+  poly(LOGO_BLUE);
+  ctx.fillStyle = `rgba(29,107,254,${0.45 + pulse * 0.10})`;
+  ctx.fill();
+
+  // Pass 3: solid fill — opaque and crisp
+  ctx.shadowBlur = 0;
+  poly(LOGO_BLUE);
+  ctx.fillStyle = `rgba(29,107,254,${0.40 + pulse * 0.08})`;
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function spawnShootingStar() {
+  const startX = Math.random() * W * 0.7;
+  const startY = Math.random() * H * 0.55;
+  const angle  = Math.PI / 5 + (Math.random() - 0.5) * 0.4;
+  shootingStars.push({
+    x: startX, y: startY,
+    vx: Math.cos(angle) * (Math.random() * 7 + 6),
+    vy: Math.sin(angle) * (Math.random() * 4 + 3),
+    len: Math.random() * 200 + 100,
+    opacity: 0, fadeIn: true,
+    w: Math.random() * 0.8 + 0.4
+  });
+}
+
+function drawCanvas() {
+  frame++;
+  ctx.clearRect(0, 0, W, H);
+
+  // Slow breathing pulse (0 → 1 → 0, ~13 s cycle)
+  const pulse = (Math.sin(frame * 0.008) + 1) / 2;
+
+  // Órbita lenta (~10 min por volta completa)
+  rotation += 0.00010;
+
+  // Nebulosas giram via transform (são grandes, sem problema de borda)
+  ctx.save();
+  ctx.translate(W / 2, H / 2);
+  ctx.rotate(rotation);
+  ctx.translate(-W / 2, -H / 2);
+
+  // Nebula
+  for (const n of nebulae) {
+    const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
+    g.addColorStop(0,   `rgba(${n.r1},${n.g1},${n.b1},${n.a})`);
+    g.addColorStop(0.5, `rgba(${n.r1},${n.g1},${n.b1},${n.a * 0.3})`);
+    g.addColorStop(1,   'transparent');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.restore(); // fim da rotação das nebulosas
+
+  // Logo watermark (fixa)
+  drawLogoWatermark(pulse);
+
+  // Stars — cada estrela orbita individualmente ao redor do centro
+  for (const s of stars) {
+    s.angle += 0.00010;                           // mesma velocidade angular
+    s.x = W / 2 + Math.cos(s.angle) * s.dist;
+    s.y = H / 2 + Math.sin(s.angle) * s.dist;
+    s.phase += s.speed;
+    const tw = Math.sin(s.phase) * 0.22;
+    const a  = Math.max(0.04, Math.min(0.95, s.baseOpacity + tw));
+
+    // Glow for bigger stars
+    if (s.size > 1.0) {
+      const glowR = s.size * 5;
+      const glow  = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, glowR);
+      glow.addColorStop(0, s.blue ? `rgba(91,168,255,${a * 0.45})` : `rgba(200,220,255,${a * 0.3})`);
+      glow.addColorStop(1, 'transparent');
+      ctx.beginPath(); ctx.arc(s.x, s.y, glowR, 0, Math.PI * 2);
+      ctx.fillStyle = glow; ctx.fill();
+
+      // Cross flare for the brightest
+      if (s.size > 1.8) {
+        ctx.strokeStyle = s.blue
+          ? `rgba(91,168,255,${a * 0.25})`
+          : `rgba(220,235,255,${a * 0.2})`;
+        ctx.lineWidth = 0.6;
+        const fl = s.size * 8;
+        ctx.beginPath(); ctx.moveTo(s.x - fl, s.y); ctx.lineTo(s.x + fl, s.y); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(s.x, s.y - fl); ctx.lineTo(s.x, s.y + fl); ctx.stroke();
+      }
+    }
+
+    // Star dot
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+    ctx.fillStyle = s.blue ? `rgba(91,168,255,${a})` : `rgba(210,225,255,${a})`;
+    ctx.fill();
+  }
+
+  // Shooting stars
+  shootTimer++;
+  if (shootTimer > 130 + Math.random() * 150) { spawnShootingStar(); shootTimer = 0; }
+
+  for (let i = shootingStars.length - 1; i >= 0; i--) {
+    const ss = shootingStars[i];
+    ss.x += ss.vx; ss.y += ss.vy;
+
+    if (ss.fadeIn) { ss.opacity += 0.06; if (ss.opacity >= 1) ss.fadeIn = false; }
+    else           { ss.opacity -= 0.022; }
+
+    if (ss.opacity <= 0 || ss.x > W + 200 || ss.y > H + 200) { shootingStars.splice(i, 1); continue; }
+
+    const mag  = Math.sqrt(ss.vx * ss.vx + ss.vy * ss.vy);
+    const tx   = ss.x - (ss.vx / mag) * ss.len;
+    const ty   = ss.y - (ss.vy / mag) * ss.len;
+    const grad = ctx.createLinearGradient(tx, ty, ss.x, ss.y);
+    grad.addColorStop(0,    'transparent');
+    grad.addColorStop(0.65, `rgba(160,205,255,${ss.opacity * 0.35})`);
+    grad.addColorStop(1,    `rgba(255,255,255,${ss.opacity})`);
+    ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(ss.x, ss.y);
+    ctx.strokeStyle = grad; ctx.lineWidth = ss.w; ctx.stroke();
+
+    // Tip glow
+    const tg = ctx.createRadialGradient(ss.x, ss.y, 0, ss.x, ss.y, 7);
+    tg.addColorStop(0, `rgba(255,255,255,${ss.opacity * 0.9})`);
+    tg.addColorStop(0.4, `rgba(91,168,255,${ss.opacity * 0.4})`);
+    tg.addColorStop(1,   'transparent');
+    ctx.beginPath(); ctx.arc(ss.x, ss.y, 7, 0, Math.PI * 2);
+    ctx.fillStyle = tg; ctx.fill();
+  }
+
+  requestAnimationFrame(drawCanvas);
+}
+
+window.addEventListener('resize', resize);
+resize();
+drawCanvas();
+
+// ─── NAV SCROLL ───
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.style.background = window.scrollY > 60 ? 'rgba(5,5,12,0.95)' : 'rgba(5,5,12,0.6)';
+});
+
+// ─── FADE UP ───
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ─── COUNTERS ───
+function animateCounter(el) {
+  const target = +el.dataset.target;
+  let current = 0;
+  const step = target / 40;
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = Math.floor(current);
+    if (current >= target) clearInterval(timer);
+  }, 30);
+}
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.counter').forEach(animateCounter);
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stats-grid').forEach(el => counterObs.observe(el));
+
+// ─── FAQ ───
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+});
+
+// ─── FORM ───
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = '✓ Enviado! Entraremos em contato em breve.';
+  btn.style.background = 'rgba(74,222,128,0.2)';
+  btn.style.color = '#4ade80';
+  btn.style.boxShadow = 'none';
+  btn.disabled = true;
+}
+
+// ─── SMOOTH SCROLL ───
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
