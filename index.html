@@ -799,7 +799,7 @@
         <div class="team-photo"><img src="vinicius.jpeg" alt="Vinicius" onerror="this.style.display='none'"></div>
         <div class="team-info">
           <div class="team-name">Vinicius Matosinhos</div>
-          <div class="team-role">Co-fundador & CEO</div>
+          <div class="team-role">Co-fundador & CCO</div>
           <div class="team-tags">
             <span class="team-tag">Comercial</span>
             <span class="team-tag">Contratos</span>
@@ -1267,74 +1267,56 @@ function drawCanvas() {
     if (ss.fadeIn) { ss.opacity += 0.06; if (ss.opacity >= 1) ss.fadeIn = false; }
     else           { ss.opacity -= 0.022; }
 
-    if (ss.opacity <= 0 || ss.x > W + 200 || ss.y > H + 200) { shootingStars.splice(i, 1); continue; }
+    if (ss.opacity <= 0 || ss.x > W + 200 ||
+    ss.y > H + 200) {
+      shootingStars.splice(i, 1);
+      continue;
+    }
 
-    const mag  = Math.sqrt(ss.vx * ss.vx + ss.vy * ss.vy);
-    const tx   = ss.x - (ss.vx / mag) * ss.len;
-    const ty   = ss.y - (ss.vy / mag) * ss.len;
-    const grad = ctx.createLinearGradient(tx, ty, ss.x, ss.y);
-    grad.addColorStop(0,    'transparent');
-    grad.addColorStop(0.65, `rgba(160,205,255,${ss.opacity * 0.35})`);
-    grad.addColorStop(1,    `rgba(255,255,255,${ss.opacity})`);
-    ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(ss.x, ss.y);
-    ctx.strokeStyle = grad; ctx.lineWidth = ss.w; ctx.stroke();
-
-    // Tip glow
-    const tg = ctx.createRadialGradient(ss.x, ss.y, 0, ss.x, ss.y, 7);
-    tg.addColorStop(0, `rgba(255,255,255,${ss.opacity * 0.9})`);
-    tg.addColorStop(0.4, `rgba(91,168,255,${ss.opacity * 0.4})`);
-    tg.addColorStop(1,   'transparent');
-    ctx.beginPath(); ctx.arc(ss.x, ss.y, 7, 0, Math.PI * 2);
-    ctx.fillStyle = tg; ctx.fill();
+    // Draw trail
+    const angle = Math.atan2(ss.vy, ss.vx);
+    const tailX = ss.x - Math.cos(angle) * ss.len * ss.opacity;
+    const tailY = ss.y - Math.sin(angle) * ss.len * ss.opacity;
+    const grad = ctx.createLinearGradient(tailX, tailY, ss.x, ss.y);
+    grad.addColorStop(0, `rgba(255,255,255,0)`);
+    grad.addColorStop(1, `rgba(255,255,255,${ss.opacity * 0.9})`);
+    ctx.beginPath();
+    ctx.moveTo(tailX, tailY);
+    ctx.lineTo(ss.x, ss.y);
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = ss.w;
+    ctx.stroke();
   }
 
   requestAnimationFrame(drawCanvas);
 }
 
-window.addEventListener('resize', resize);
+// ── Init ──
 resize();
+window.addEventListener('resize', resize);
 drawCanvas();
 
-// ─── NAV SCROLL ───
+// Nav scroll effect
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
-  nav.style.background = window.scrollY > 60 ? 'rgba(5,5,12,0.95)' : 'rgba(5,5,12,0.6)';
+  nav.classList.toggle('scrolled', window.scrollY > 40);
 });
 
-// ─── FADE UP ───
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });
-}, { threshold: 0.1 });
+// Fade-up on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-// ─── COUNTERS ───
-function animateCounter(el) {
-  const target = +el.dataset.target;
-  let current = 0;
-  const step = target / 40;
-  const timer = setInterval(() => {
-    current = Math.min(current + step, target);
-    el.textContent = Math.floor(current);
-    if (current >= target) clearInterval(timer);
-  }, 30);
-}
-const counterObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.counter').forEach(animateCounter);
-      counterObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.5 });
-document.querySelectorAll('.stats-grid').forEach(el => counterObs.observe(el));
-
-// ─── FAQ ───
+// FAQ accordion
 document.querySelectorAll('.faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
     const item = btn.parentElement;
     const answer = item.querySelector('.faq-a');
     const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i => {
+    document.querySelectorAll('.faq-item').forEach(i => {
       i.classList.remove('open');
       i.querySelector('.faq-a').style.maxHeight = '0';
     });
@@ -1342,26 +1324,6 @@ document.querySelectorAll('.faq-q').forEach(btn => {
       item.classList.add('open');
       answer.style.maxHeight = answer.scrollHeight + 'px';
     }
-  });
-});
-
-// ─── FORM ───
-function handleSubmit(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('.form-submit');
-  btn.textContent = '✓ Enviado! Entraremos em contato em breve.';
-  btn.style.background = 'rgba(74,222,128,0.2)';
-  btn.style.color = '#4ade80';
-  btn.style.boxShadow = 'none';
-  btn.disabled = true;
-}
-
-// ─── SMOOTH SCROLL ───
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const id = a.getAttribute('href').slice(1);
-    const el = document.getElementById(id);
-    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
   });
 });
 </script>
