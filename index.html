@@ -444,6 +444,17 @@
       .flow-nodes .fn, .flow-nodes .fn-arrow, .process-section .ps { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
 
+    /* Micro-animações "ao vivo" nos mockups */
+    @keyframes dotPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes statusBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.28; } }
+    .mockup-bar .dot-btn { animation: dotPulse 2.4s ease-in-out infinite; }
+    .mockup-bar .dot-btn:nth-child(2) { animation-delay: 0.4s; }
+    .mockup-bar .dot-btn:nth-child(3) { animation-delay: 0.8s; }
+    .status-run { animation: statusBlink 1.2s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .mockup-bar .dot-btn, .status-run { animation: none !important; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .hero-sub { color: rgba(255,255,255,0.92); text-shadow: 0 1px 12px rgba(0,0,0,0.8); }
