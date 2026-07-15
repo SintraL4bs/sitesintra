@@ -455,6 +455,53 @@
       .mockup-bar .dot-btn, .status-run { animation: none !important; }
     }
 
+    /* Kanban: fluxo "a fazer → em progresso" carregando */
+    .kanban-grid { position: relative; }
+    .kan-flow {
+      position: absolute; left: 33.33%; top: 46%;
+      transform: translate(-50%, -50%);
+      font-size: 15px; font-weight: 700; color: var(--purple);
+      pointer-events: none; text-shadow: 0 0 6px rgba(29,107,254,0.5);
+      animation: kanFlow 1.5s ease-in-out infinite;
+    }
+    @keyframes kanFlow {
+      0%   { transform: translate(-50%, -50%) translateX(-5px); opacity: 0.15; }
+      50%  { transform: translate(-50%, -50%) translateX(4px);  opacity: 1; }
+      100% { transform: translate(-50%, -50%) translateX(-5px); opacity: 0.15; }
+    }
+
+    /* Bolinhas "ao vivo" (diagnóstico + validação) */
+    .live-dot { display: inline-block; animation: dotPulse 1.3s ease-in-out infinite; }
+
+    /* Barra de progresso com shimmer de carregamento */
+    .prog-fill { position: relative; overflow: hidden; }
+    .prog-fill::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      transform: translateX(-100%);
+      animation: progShimmer 1.6s linear infinite;
+    }
+    @keyframes progShimmer {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(220%); }
+    }
+
+    /* Lista "próximas evoluções" — itens surgindo em sequência */
+    .evo-list > div { animation: evoGlow 2.7s ease-in-out infinite; }
+    .evo-list > div:nth-child(2) { animation-delay: 0.5s; }
+    .evo-list > div:nth-child(3) { animation-delay: 1s; }
+    @keyframes evoGlow {
+      0%, 100% { opacity: 0.3; transform: translateX(0); }
+      50%      { opacity: 1;   transform: translateX(3px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .kan-flow, .live-dot, .evo-list > div { animation: none !important; }
+      .prog-fill::after { animation: none !important; opacity: 0; }
+      .kan-flow { opacity: 0.6 !important; }
+      .evo-list > div { opacity: 1 !important; transform: none !important; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .hero-sub { color: rgba(255,255,255,0.92); text-shadow: 0 1px 12px rgba(0,0,0,0.8); }
@@ -621,7 +668,8 @@
       <div class="mockup">
         <div class="mockup-bar"><div class="dot-btn"></div><div class="dot-btn"></div><div class="dot-btn"></div></div>
         <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.07em;">Kanban — Sprint atual</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+        <div class="kanban-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <span class="kan-flow" aria-hidden="true">→</span>
           <div>
             <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">A fazer</div>
             <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:11px;color:var(--text2);">Email automático</div>
@@ -760,7 +808,7 @@
             <div class="ps-meta">⏱ 60 min — Sem custo, sem compromisso</div>
           </div>
           <div class="ps-visual">
-            <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:8px;">● Diagnóstico em andamento</div>
+            <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:8px;"><span class="live-dot">●</span> Diagnóstico em andamento</div>
             <div style="font-size:12px;color:var(--text2);line-height:1.6;">Identificando gargalos em atendimento, orçamentos e qualificação de leads...</div>
           </div>
         </div>
@@ -792,7 +840,7 @@
           </div>
           <div class="ps-visual">
             <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Progresso atual</div>
-            <div style="background:var(--border);border-radius:4px;height:6px;margin-bottom:6px"><div style="background:var(--grad);height:100%;width:70%;border-radius:4px"></div></div>
+            <div style="background:var(--border);border-radius:4px;height:6px;margin-bottom:6px"><div class="prog-fill" style="background:var(--grad);height:100%;width:70%;border-radius:4px"></div></div>
             <div style="font-size:11px;color:var(--text3)">70% — Integração com WhatsApp concluída</div>
           </div>
         </div>
@@ -809,7 +857,7 @@
           <div class="ps-visual" style="display:flex;flex-direction:column;gap:8px">
             <div style="display:flex;gap:8px;align-items:center;font-size:12px"><span style="color:var(--green)">✓</span><span style="color:var(--text2)">Solução no ar e monitorada</span></div>
             <div style="display:flex;gap:8px;align-items:center;font-size:12px"><span style="color:var(--green)">✓</span><span style="color:var(--text2)">Ajustes feitos junto com você</span></div>
-            <div style="display:flex;gap:8px;align-items:center;font-size:12px"><span style="color:var(--purple)">●</span><span style="color:var(--text2)">Otimizando fluxo de orçamentos...</span></div>
+            <div style="display:flex;gap:8px;align-items:center;font-size:12px"><span class="live-dot" style="color:var(--purple)">●</span><span style="color:var(--text2)">Otimizando fluxo de orçamentos...</span></div>
           </div>
         </div>
       </div>
@@ -824,7 +872,7 @@
           </div>
           <div class="ps-visual">
             <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">Próximas evoluções</div>
-            <div style="display:flex;flex-direction:column;gap:6px;font-size:11px;color:var(--text3)">
+            <div class="evo-list" style="display:flex;flex-direction:column;gap:6px;font-size:11px;color:var(--text3)">
               <div>→ Integração com CRM</div>
               <div>→ Módulo de recompra automática</div>
               <div>→ Dashboard de relatórios avançado</div>
