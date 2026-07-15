@@ -423,6 +423,27 @@
     .fade-up-d2 { transition-delay: 0.2s; }
     .fade-up-d3 { transition-delay: 0.3s; }
 
+    /* Entrada escalonada dos cards (seção solução) */
+    .flow-nodes .fn { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-up.vis .flow-nodes .fn { opacity: 1; transform: translateY(0); }
+    .fade-up.vis .flow-nodes .fn:nth-child(1) { transition-delay: 0.15s; }
+    .fade-up.vis .flow-nodes .fn:nth-child(2) { transition-delay: 0.30s; }
+    .fade-up.vis .flow-nodes .fn:nth-child(3) { transition-delay: 0.45s; }
+    .fade-up.vis .flow-nodes .fn:nth-child(4) { transition-delay: 0.60s; }
+    .fade-up.vis .flow-nodes .fn:nth-child(5) { transition-delay: 0.75s; }
+    .fade-up.vis .flow-nodes .fn:nth-child(6) { transition-delay: 0.90s; }
+    .fade-up.vis .flow-nodes .fn:nth-child(7) { transition-delay: 1.05s; }
+    .flow-nodes .fn-arrow { opacity: 0; transition: opacity 0.4s ease; }
+    .fade-up.vis .flow-nodes .fn-arrow { opacity: 1; transition-delay: 0.55s; }
+
+    /* Entrada mais marcada dos cards de processo */
+    .process-section .ps { transform: translateY(30px) scale(0.985); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .process-section .ps.vis { transform: translateY(0) scale(1); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .flow-nodes .fn, .flow-nodes .fn-arrow, .process-section .ps { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .hero-sub { color: rgba(255,255,255,0.92); text-shadow: 0 1px 12px rgba(0,0,0,0.8); }
@@ -692,7 +713,7 @@
       <p style="margin-left:auto;margin-right:auto">Negócios reais que colocamos no digital — do site à presença online que trabalha por eles.</p>
     </div>
     <div class="services-grid" style="grid-template-columns:repeat(2,1fr);max-width:760px;margin:0 auto;">
-      <a href="https://inprint-site.vercel.app" target="_blank" rel="noopener" class="svc-card fade-up" style="text-decoration:none;color:inherit;display:block;">
+      <a href="https://www.inprintgrafica.com.br/" target="_blank" rel="noopener" class="svc-card fade-up" style="text-decoration:none;color:inherit;display:block;">
         <div class="svc-icon">🖨️</div>
         <h3>InPrint</h3>
         <p>Presença digital e site institucional para uma gráfica de Belo Horizonte — comunicando serviços e captando contato de forma clara.</p>
