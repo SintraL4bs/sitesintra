@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sintra Flow — Atendimento por IA no WhatsApp, com os preços da sua loja</title>
+  <meta name="description" content="Um atendente de IA que responde seus clientes no WhatsApp usando os preços, prazos e regras da sua loja , sem inventar. Em beta. Entre na lista de espera.">
+  <meta name="keywords" content="atendimento por IA no WhatsApp, atendente virtual WhatsApp, chatbot para WhatsApp, atendimento automático WhatsApp, IA para pequenos negócios">
+
+  <link rel="canonical" href="https://sitesintra.vercel.app/sintra-flow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sintra Labs">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://sitesintra.vercel.app/sintra-flow">
+  <meta property="og:title" content="Sintra Flow — Atendimento por IA no WhatsApp, com os preços da sua loja">
+  <meta property="og:description" content="Um atendente de IA que responde no WhatsApp usando os preços, prazos e regras da sua loja , sem inventar. Em beta. Entre na lista de espera.">
+  <meta property="og:image" content="https://sitesintra.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sintra Flow — Atendimento por IA no WhatsApp">
+  <meta name="twitter:description" content="Uma IA que responde no WhatsApp com os preços e regras da sua loja , sem inventar. Em beta.">
+  <meta name="twitter:image" content="https://sitesintra.vercel.app/og-image.png">
+
+  <!-- FAQ structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Quanto custa?", "acceptedAnswer": { "@type": "Answer", "text": "O valor é definido caso a caso, de acordo com o tamanho e as necessidades da sua loja. Entre na lista de espera e a gente conversa sobre isso pessoalmente." } },
+      { "@type": "Question", "name": "Quando lança?", "acceptedAnswer": { "@type": "Answer", "text": "O Flow está em beta agora, atendendo com um grupo pequeno de lojas piloto. Vamos abrindo novas vagas aos poucos, por isso a lista de espera." } },
+      { "@type": "Question", "name": "Preciso saber mexer com tecnologia?", "acceptedAnswer": { "@type": "Answer", "text": "Não. Quem configura e treina a IA na sua tabela é a Sintra Labs. Você usa um painel simples para acompanhar as conversas e assumir quando quiser." } },
+      { "@type": "Question", "name": "E se a IA errar?", "acceptedAnswer": { "@type": "Answer", "text": "Ela foi desenhada para não inventar: os preços e prazos vêm da sua tabela, não da imaginação do modelo. E em qualquer situação fora do previsto, ela passa a conversa para uma pessoa da sua equipe." } },
+      { "@type": "Question", "name": "Funciona com qualquer WhatsApp?", "acceptedAnswer": { "@type": "Answer", "text": "Funciona com o WhatsApp comercial da sua loja, pela API oficial da Meta. A Sintra cuida da parte técnica da conexão." } }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='27 16 45 70'%3E%3Crect width='100' height='100' fill='%230a0a14'/%3E%3Cpolygon fill='white' points='55.4,20.4 30.8,34.5 29.3,35.3 29.3,43.6 29.3,51.8 30.4,52.5 36.0,55.7 40.3,58.4 43.0,56.9 51.1,52.0 42.6,46.4 40.3,44.9 40.6,43.1 56.7,33.6 59.7,31.9 59.7,25.0 59.6,18.1'/%3E%3Cpolygon fill='%231d6bfe' points='58.1,47.9 58.0,56.3 54.5,58.4 47.6,62.6 41.3,66.3 38.1,68.3 37.9,75.4 37.9,82.7 38.3,82.8 43.5,79.6 52.1,74.4 62.7,68.1 69.7,63.8 69.9,55.0 69.9,46.5 68.2,45.4 58.3,39.5'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050810;
+      --bg2: #080d18;
+      --bg3: #0c1428;
+      --surface: rgba(29,107,254,0.04);
+      --surface2: rgba(29,107,254,0.07);
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(29,107,254,0.3);
+      --purple: #1d6bfe;
+      --cyan: #5ba8ff;
+      --green: #4ade80;
+      --text: #eef2ff;
+      --text2: #7b8fc4;
+      --text3: #3a4d7a;
+      --grad: linear-gradient(135deg, #1d6bfe, #5ba8ff);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.6; overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; }
+    a { color: inherit; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 28px; }
+    .gt { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 15px; border-radius: 100px;
+      border: 1px solid var(--border); background: var(--surface);
+      font-size: 11px; font-weight: 600; color: var(--text2);
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .badge-beta { border-color: rgba(74,222,128,0.28); color: #9becb6; background: rgba(74,222,128,0.06); }
+    .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--grad); flex-shrink: 0; }
+    .badge-beta .badge-dot { background: var(--green); box-shadow: 0 0 8px rgba(74,222,128,0.7); animation: pulseDot 1.6s ease-in-out infinite; }
+    @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 10px; font-size: 14px;
+      font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: all 0.2s; border: none; font-family: inherit;
+    }
+    .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 0 24px rgba(29,107,254,0.35); }
+    .btn-primary:hover { box-shadow: 0 0 40px rgba(29,107,254,0.55); transform: translateY(-2px); }
+    .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--border2); color: var(--text); }
+    .btn-lg { padding: 15px 30px; font-size: 15px; border-radius: 12px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 64px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 40px;
+      background: rgba(5,5,12,0.6); backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo span { font-size: 19px; letter-spacing: -0.02em; color: #fff; }
+    .nav-links { display: flex; gap: 30px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-chip { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green); border: 1px solid rgba(74,222,128,0.3); border-radius: 100px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
+
+    /* HERO */
+    .hero { padding: 150px 0 80px; text-align: center; position: relative; }
+    .hero::before {
+      content: ""; position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+      width: 620px; height: 420px; max-width: 90%;
+      background: radial-gradient(ellipse, rgba(29,107,254,0.16), transparent 70%);
+      pointer-events: none; z-index: -1;
+    }
+    .hero h1 { font-size: clamp(30px, 5.2vw, 52px); font-weight: 800; line-height: 1.1; max-width: 860px; margin: 22px auto 0; }
+    .hero .sub { font-size: clamp(15px, 2vw, 18px); color: var(--text2); max-width: 620px; margin: 20px auto 0; }
+    .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
+
+    /* SECTIONS */
+    section { position: relative; }
+    .block { padding: 66px 0; }
+    .eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--purple); margin-bottom: 14px; }
+    .block h2 { font-size: clamp(24px, 3.6vw, 34px); font-weight: 800; line-height: 1.18; }
+    .block .lead { color: var(--text2); font-size: 16px; margin-top: 14px; max-width: 640px; }
+    .divider { height: 1px; background: var(--border); max-width: 1000px; margin: 0 auto; }
+
+    /* PROBLEMA */
+    .problem-card {
+      border: 1px solid var(--border); border-radius: 18px;
+      background: linear-gradient(180deg, rgba(29,107,254,0.05), transparent);
+      padding: 40px; margin-top: 8px;
+    }
+    .problem-card h2 { margin-bottom: 16px; }
+    .problem-card p { color: var(--text2); font-size: 16px; margin-bottom: 14px; }
+    .problem-card p:last-child { margin-bottom: 0; }
+    .problem-card .flip { color: var(--text); font-weight: 600; }
+
+    /* COMO FUNCIONA */
+    .vp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 36px; }
+    .vp {
+      border: 1px solid var(--border); border-radius: 14px; padding: 24px;
+      background: var(--surface); transition: border-color 0.2s, transform 0.2s;
+    }
+    .vp:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .vp-num { font-size: 13px; font-weight: 800; color: var(--purple); margin-bottom: 10px; }
+    .vp h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .vp p { color: var(--text2); font-size: 14px; }
+    .vp.wide { grid-column: 1 / -1; }
+
+    /* NÃO FAZ */
+    .notdo { border: 1px solid rgba(74,222,128,0.18); border-radius: 18px; background: rgba(74,222,128,0.03); padding: 40px; margin-top: 20px; }
+    .notdo ul { list-style: none; display: flex; flex-direction: column; gap: 14px; margin: 24px 0; }
+    .notdo li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; color: var(--text); }
+    .notdo li span.x { color: #ff6b6b; font-weight: 700; flex-shrink: 0; }
+    .notdo .kicker { color: var(--green); font-weight: 600; font-size: 15px; }
+
+    /* PRA QUEM */
+    .who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; }
+    .who {
+      border: 1px solid var(--border); border-radius: 14px; padding: 26px 22px;
+      background: var(--surface); text-align: center;
+    }
+    .who .emoji { font-size: 30px; }
+    .who h3 { font-size: 16px; font-weight: 700; margin-top: 12px; }
+    .who p { color: var(--text2); font-size: 13px; margin-top: 6px; }
+    .who-close { color: var(--text2); font-size: 15px; margin-top: 26px; text-align: center; }
+
+    /* LISTA DE ESPERA */
+    .wait { background: linear-gradient(180deg, var(--bg2), var(--bg)); }
+    .wait-inner { display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: start; }
+    .wait-copy h2 { font-size: clamp(24px, 3.6vw, 32px); font-weight: 800; }
+    .wait-copy p { color: var(--text2); font-size: 16px; margin-top: 14px; max-width: 420px; }
+    .wait-points { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; }
+    .wait-points .wp { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text2); }
+    .wait-points .wp span { color: var(--green); }
+
+    .form-wrap { border: 1px solid var(--border); border-radius: 18px; background: var(--bg2); padding: 32px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 7px; }
+    .form-group input {
+      width: 100%; padding: 13px 15px; border-radius: 10px;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+      color: var(--text); font-size: 15px; font-family: inherit; transition: border-color 0.2s;
+    }
+    .form-group input:focus { outline: none; border-color: var(--border2); }
+    .form-group input::placeholder { color: var(--text3); }
+    .form-submit {
+      width: 100%; padding: 15px; border-radius: 10px; border: none;
+      background: var(--grad); color: #fff; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: inherit; box-shadow: 0 0 24px rgba(29,107,254,0.35);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .form-submit:hover { box-shadow: 0 0 40px rgba(29,107,254,0.55); transform: translateY(-2px); }
+    .form-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .form-micro { text-align: center; font-size: 12px; color: var(--text3); margin-top: 14px; }
+    #flow-success { text-align: center; padding: 40px 16px; display: none; }
+    #flow-success .check { width: 66px; height: 66px; border-radius: 50%; background: var(--grad); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 30px; }
+
+    /* FAQ */
+    .faq { max-width: 780px; margin: 30px auto 0; }
+    .faq details { border-bottom: 1px solid var(--border); padding: 6px 0; }
+    .faq summary { cursor: pointer; list-style: none; padding: 18px 4px; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--purple); font-size: 22px; font-weight: 400; flex-shrink: 0; transition: transform 0.2s; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { color: var(--text2); font-size: 15px; padding: 0 4px 18px; }
+
+    /* CTA FINAL */
+    .final { text-align: center; padding: 80px 0; }
+    .final h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; max-width: 640px; margin: 0 auto; }
+    .final p { color: var(--text2); font-size: 16px; max-width: 560px; margin: 18px auto 30px; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 40px 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+    .footer-links a { color: var(--text2); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-right { display: flex; align-items: center; gap: 16px; color: var(--text3); font-size: 13px; }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .vp-grid, .who-grid, .wait-inner { grid-template-columns: 1fr; }
+      .block { padding: 48px 0; }
+      .problem-card, .notdo { padding: 28px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .badge-beta .badge-dot { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <svg viewBox="27 16 45 70" xmlns="http://www.w3.org/2000/svg" height="30">
+      <polygon fill="white" points="55.4,20.4 30.8,34.5 29.3,35.3 29.3,43.6 29.3,51.8 30.4,52.5 36.0,55.7 40.3,58.4 43.0,56.9 51.1,52.0 42.6,46.4 40.3,44.9 40.6,43.1 56.7,33.6 59.7,31.9 59.7,25.0 59.6,18.1"/>
+      <polygon fill="#1d6bfe" points="58.1,47.9 58.0,56.3 54.5,58.4 47.6,62.6 41.3,66.3 38.1,68.3 37.9,75.4 37.9,82.7 38.3,82.8 43.5,79.6 52.1,74.4 62.7,68.1 69.7,63.8 69.9,55.0 69.9,46.5 68.2,45.4 58.3,39.5"/>
+    </svg>
+    <span><b style="font-weight:700">Sintra</b><span style="font-weight:400"> Labs</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#solucao">Solução</a></li>
+    <li><a href="/#servicos">Serviços</a></li>
+    <li><a href="/#processo">Processo</a></li>
+    <li><a href="/sintra-flow" class="active">Sintra Flow</a></li>
+  </ul>
+  <a href="#lista" class="btn btn-primary">Entrar na lista</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <span class="badge badge-beta"><span class="badge-dot"></span>Em beta, selecionando as primeiras lojas piloto</span>
+    <h1>A IA que atende seus clientes no WhatsApp usando os <span class="gt">preços, prazos e regras</span> da sua loja.</h1>
+    <p class="sub">Sem inventar preço. Sem prometer o que você não faz. E sabendo a hora de passar pra uma pessoa da sua equipe.</p>
+    <div class="hero-cta">
+      <a href="#lista" class="btn btn-primary btn-lg">Entrar na lista de espera</a>
+      <a href="#como-funciona" class="btn btn-ghost btn-lg">Ver como funciona ↓</a>
+    </div>
+  </div>
+</header>
+
+<!-- PROBLEMA -->
+<section class="block">
+  <div class="container">
+    <div class="problem-card">
+      <div class="eyebrow">O problema</div>
+      <h2>A maioria dos "bots" responde qualquer coisa. E inventa.</h2>
+      <p>Preço errado, desconto que não existe, entrega que a loja não faz. O cliente confia, a loja não honra, e a conta sobra pra você.</p>
+      <p class="flip">O Sintra Flow é o contrário: ele só fala o que está na sua tabela, do jeito que você definiu.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMO FUNCIONA -->
+<section class="block" id="como-funciona">
+  <div class="container">
+    <div class="eyebrow">Como funciona</div>
+    <h2 class="block-h2" style="font-size:clamp(24px,3.6vw,34px);font-weight:800">O que o Flow faz pela sua loja.</h2>
+    <div class="vp-grid">
+      <div class="vp">
+        <div class="vp-num">01</div>
+        <h3>Ancorado na sua tabela</h3>
+        <p>Preço e prazo saem do que você cadastrou, calculados com precisão e nunca chutados pela IA.</p>
+      </div>
+      <div class="vp">
+        <div class="vp-num">02</div>
+        <h3>Respeita as suas regras</h3>
+        <p>Não inventa desconto. Não promete entrega se você não faz entrega. Não improvisa condição que você não ofereceu.</p>
+      </div>
+      <div class="vp">
+        <div class="vp-num">03</div>
+        <h3>Sabe a hora de te chamar</h3>
+        <p>Na hora de fechar a venda, numa reclamação séria ou num caso fora do comum, ele passa a conversa pra uma pessoa da sua equipe, sem atrito pro cliente.</p>
+      </div>
+      <div class="vp">
+        <div class="vp-num">04</div>
+        <h3>Fala no tom da sua loja</h3>
+        <p>Você escolhe como ele atende: mais amigável ou mais profissional. Ele responde no estilo WhatsApp, curto e natural.</p>
+      </div>
+      <div class="vp wide">
+        <div class="vp-num">05</div>
+        <h3>Gerenciado pela Sintra</h3>
+        <p>Você não monta nada nem vira "programador de bot". A gente configura, treina na sua tabela real e acompanha o funcionamento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE NÃO FAZ -->
+<section class="block">
+  <div class="container">
+    <div class="notdo">
+      <div class="eyebrow" style="color:var(--green)">O que ele NÃO faz</div>
+      <h2 style="font-size:clamp(22px,3.4vw,30px);font-weight:800">A honestidade é o produto.</h2>
+      <ul>
+        <li><span class="x">✕</span> Inventar preço ou desconto.</li>
+        <li><span class="x">✕</span> Prometer prazo ou entrega que a loja não cumpre.</li>
+        <li><span class="x">✕</span> Empurrar o cliente com pressão ou informação falsa.</li>
+        <li><span class="x">✕</span> Fingir que resolve o que só uma pessoa resolve.</li>
+      </ul>
+      <p class="kicker">Menos alucinação, menos promessa furada, menos cliente irritado.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRA QUEM É -->
+<section class="block">
+  <div class="container">
+    <div class="eyebrow">Pra quem é</div>
+    <h2 style="font-size:clamp(24px,3.6vw,34px);font-weight:800">Pequenos negócios que vendem pelo WhatsApp.</h2>
+    <p class="lead">Feito para quem tem um catálogo com preço e prazo e responde as mesmas perguntas o dia inteiro.</p>
+    <div class="who-grid">
+      <div class="who"><div class="emoji">🍰</div><h3>Confeitarias e docerias</h3><p>Encomendas, tabelas de bolos e docinhos, prazos de produção.</p></div>
+      <div class="who"><div class="emoji">🖨️</div><h3>Gráficas rápidas</h3><p>Orçamento por material, quantidade e prazo de entrega.</p></div>
+      <div class="who"><div class="emoji">🛍️</div><h3>Comércio de bairro</h3><p>Lojas de encomenda e vendas recorrentes por WhatsApp.</p></div>
+    </div>
+    <p class="who-close">Se você responde as mesmas perguntas de preço e prazo o dia inteiro, o Flow foi feito pra isso.</p>
+  </div>
+</section>
+
+<!-- LISTA DE ESPERA -->
+<section class="block wait" id="lista">
+  <div class="container">
+    <div class="wait-inner">
+      <div class="wait-copy">
+        <div class="eyebrow">Lista de espera</div>
+        <h2>Quer o Flow na sua loja?</h2>
+        <p>Estamos abrindo o beta para as primeiras lojas. Deixe seu contato e a gente chama você quando for a sua vez.</p>
+        <div class="wait-points">
+          <div class="wp"><span>✓</span> Sem compromisso e sem custo pra entrar na fila.</div>
+          <div class="wp"><span>✓</span> A gente conversa antes de qualquer coisa.</div>
+          <div class="wp"><span>✓</span> Vagas abertas aos poucos, por ordem da lista.</div>
+        </div>
+      </div>
+
+      <div class="form-wrap">
+        <form id="flow-form" onsubmit="handleFlowSubmit(event)">
+          <input type="hidden" name="origem" value="Lista de espera Sintra Flow">
+          <input type="hidden" name="_subject" value="Nova inscrição — Lista de espera Sintra Flow">
+          <div class="form-group">
+            <label>Nome *</label>
+            <input type="text" name="nome" placeholder="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp *</label>
+            <input type="tel" name="whatsapp" placeholder="(31) 99999-9999" required>
+          </div>
+          <div class="form-group">
+            <label>Email <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
+            <input type="email" name="email" placeholder="seu@email.com (pra te avisar do lançamento)">
+          </div>
+          <div class="form-group">
+            <label>Empresa <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
+            <input type="text" name="empresa" placeholder="Nome da sua loja">
+          </div>
+          <button type="submit" class="form-submit" id="flow-submit">Entrar na lista</button>
+          <div class="form-micro">Sem compromisso. A gente só usa seu contato pra falar sobre o Flow.</div>
+        </form>
+
+        <div id="flow-success">
+          <div class="check">✓</div>
+          <h3 style="font-size:22px;font-weight:800;margin-bottom:10px">Prontinho! Você está na lista.</h3>
+          <p style="color:var(--text2);font-size:15px;max-width:340px;margin:0 auto">A gente te chama assim que abrir uma vaga. 🎉</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section class="block">
+  <div class="container">
+    <div class="eyebrow" style="text-align:center">FAQ</div>
+    <h2 style="text-align:center;font-size:clamp(24px,3.6vw,32px);font-weight:800">Perguntas frequentes</h2>
+    <div class="faq">
+      <details>
+        <summary>Quanto custa?</summary>
+        <p>O valor é definido caso a caso, de acordo com o tamanho e as necessidades da sua loja. Entre na lista de espera e a gente conversa sobre isso pessoalmente.</p>
+      </details>
+      <details>
+        <summary>Quando lança?</summary>
+        <p>O Flow está em beta agora, atendendo com um grupo pequeno de lojas piloto. Vamos abrindo novas vagas aos poucos, por isso a lista de espera.</p>
+      </details>
+      <details>
+        <summary>Preciso saber mexer com tecnologia?</summary>
+        <p>Não. Quem configura e treina a IA na sua tabela é a Sintra Labs. Você usa um painel simples pra acompanhar as conversas e assumir quando quiser.</p>
+      </details>
+      <details>
+        <summary>E se a IA errar?</summary>
+        <p>Ela foi desenhada pra não inventar: os preços e prazos vêm da sua tabela, não da imaginação do modelo. E em qualquer situação fora do previsto, ela passa a conversa pra uma pessoa da sua equipe.</p>
+      </details>
+      <details>
+        <summary>Meu cliente vai saber que é uma IA?</summary>
+        <p>O Flow atende com naturalidade, no tom da sua loja. Ele não se apresenta como robô por conta própria, mas também não engana: se o cliente perguntar diretamente, ele não mente.</p>
+      </details>
+      <details>
+        <summary>Funciona com qualquer WhatsApp?</summary>
+        <p>Funciona com o WhatsApp comercial da sua loja, pela API oficial da Meta. A Sintra cuida da parte técnica da conexão.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="final">
+  <div class="container">
+    <h2>Atendimento que responde como a <span class="gt">sua loja</span> responderia.</h2>
+    <p>Entre na lista de espera do Sintra Flow e seja uma das primeiras lojas a atender no WhatsApp com uma IA que não inventa.</p>
+    <a href="#lista" class="btn btn-primary btn-lg">Entrar na lista de espera</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/" class="footer-logo" style="text-decoration:none">
+        <svg viewBox="27 16 45 70" xmlns="http://www.w3.org/2000/svg" height="30" style="flex-shrink:0">
+          <polygon fill="white" points="55.4,20.4 30.8,34.5 29.3,35.3 29.3,43.6 29.3,51.8 30.4,52.5 36.0,55.7 40.3,58.4 43.0,56.9 51.1,52.0 42.6,46.4 40.3,44.9 40.6,43.1 56.7,33.6 59.7,31.9 59.7,25.0 59.6,18.1"/>
+          <polygon fill="#1d6bfe" points="58.1,47.9 58.0,56.3 54.5,58.4 47.6,62.6 41.3,66.3 38.1,68.3 37.9,75.4 37.9,82.7 38.3,82.8 43.5,79.6 52.1,74.4 62.7,68.1 69.7,63.8 69.9,55.0 69.9,46.5 68.2,45.4 58.3,39.5"/>
+        </svg>
+        <span style="font-size:17px;letter-spacing:-0.02em;color:#fff"><b style="font-weight:700">Sintra</b><span style="font-weight:400"> Labs</span></span>
+      </a>
+      <div class="footer-links">
+        <a href="/">Início</a>
+        <a href="/#servicos">Serviços</a>
+        <a href="/#processo">Processo</a>
+        <a href="/sintra-flow">Sintra Flow</a>
+        <a href="/#diagnostico">Diagnóstico</a>
+      </div>
+      <div class="footer-right">
+        <a href="https://www.instagram.com/sintralabs/" target="_blank" rel="noopener" aria-label="Instagram da Sintra Labs" style="color:var(--text3);display:flex;align-items:center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+        <span>© 2026 Sintra Labs · BH, MG</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+async function handleFlowSubmit(event) {
+  event.preventDefault();
+  const form = document.getElementById('flow-form');
+  const btn = document.getElementById('flow-submit');
+  const success = document.getElementById('flow-success');
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const data = new FormData(form);
+
+  try {
+    const response = await fetch('https://formspree.io/f/xykapywa', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Entrar na lista';
+      alert('Ops, algo deu errado. Tente novamente em instantes.');
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Entrar na lista';
+    alert('Erro de conexão. Verifique sua internet e tente novamente.');
+  }
+}
+</script>
+
+</body>
+</html>
