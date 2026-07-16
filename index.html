@@ -110,6 +110,11 @@
     .nav-links { display: flex; gap: 34px; list-style: none; }
     .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
+    .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* ── HERO ── */
     .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 64px; }
@@ -511,7 +516,19 @@
     }
     @media (max-width: 960px) {
       nav { padding: 0 20px; }
-      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .nav-cta { display: none; }
+      .nav-links {
+        position: fixed; top: 64px; left: 0; right: 0;
+        flex-direction: column; gap: 0; align-items: stretch;
+        background: rgba(5,5,12,0.98); backdrop-filter: blur(24px);
+        border-bottom: 1px solid var(--border);
+        padding: 6px 0; transform: translateY(-170%);
+        transition: transform 0.3s ease; z-index: 190;
+      }
+      .nav-links.open { transform: translateY(0); }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 15px 24px; font-size: 15px; }
       .feature-block, .feature-block.reverse { grid-template-columns: 1fr; direction: ltr; gap: 40px; }
       .ps-content { grid-template-columns: 1fr; }
       .ps { grid-template-columns: 1fr; gap: 8px; }
@@ -545,7 +562,8 @@
     <li><a href="#planos">Planos</a></li>
     <li><a href="#contato">Time</a></li>
   </ul>
-  <a href="#diagnostico" class="btn btn-primary">Fale conosco</a>
+  <a href="#diagnostico" class="btn btn-primary nav-cta">Fale conosco</a>
+  <button class="nav-burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- ─── HERO ─── -->
@@ -1558,6 +1576,25 @@ document.querySelectorAll('.faq-q').forEach(btn => {
     }
   });
 });
+
+// Menu mobile (hambúrguer)
+(function () {
+  var burger = document.querySelector('.nav-burger');
+  var links = document.querySelector('.nav-links');
+  if (!burger || !links) return;
+  burger.addEventListener('click', function () {
+    var open = links.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  links.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      links.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
 </script>
 </body>
 </html>

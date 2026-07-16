@@ -111,6 +111,11 @@
     .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
     .nav-chip { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green); border: 1px solid rgba(74,222,128,0.3); border-radius: 100px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
+    .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* HERO */
     .hero { padding: 150px 0 80px; text-align: center; position: relative; }
@@ -228,10 +233,29 @@
     .footer-right { display: flex; align-items: center; gap: 16px; color: var(--text3); font-size: 13px; }
 
     @media (max-width: 860px) {
-      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .nav-cta { display: none; }
+      .nav-links {
+        position: fixed; top: 64px; left: 0; right: 0;
+        flex-direction: column; gap: 0; align-items: stretch;
+        background: rgba(5,8,16,0.98); backdrop-filter: blur(24px);
+        border-bottom: 1px solid var(--border);
+        padding: 6px 0; transform: translateY(-160%);
+        transition: transform 0.3s ease; z-index: 190;
+      }
+      .nav-links.open { transform: translateY(0); }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 15px 28px; font-size: 15px; }
       .vp-grid, .who-grid, .wait-inner { grid-template-columns: 1fr; }
       .block { padding: 48px 0; }
       .problem-card, .notdo { padding: 28px; }
+      .hero { padding: 118px 0 60px; }
+      .hero .badge { white-space: normal; max-width: 90vw; text-align: center; line-height: 1.5; }
+      .container { padding: 0 22px; }
+    }
+    @media (max-width: 400px) {
+      .flow-lockup svg { height: 38px; }
+      .hero-cta .btn { width: 100%; justify-content: center; }
     }
     @media (prefers-reduced-motion: reduce) {
       .badge-beta .badge-dot { animation: none; }
@@ -252,9 +276,12 @@
     <li><a href="/#solucao">Solução</a></li>
     <li><a href="/#servicos">Serviços</a></li>
     <li><a href="/#processo">Processo</a></li>
-    <li><a href="/sintra-flow" class="active">Sintra Flow</a></li>
+    <li><a href="/sintra-flow" class="active">Sintra Flow <span class="nav-chip">beta</span></a></li>
+    <li><a href="/#planos">Planos</a></li>
+    <li><a href="/#contato">Time</a></li>
   </ul>
-  <a href="#lista" class="btn btn-primary">Entrar na lista</a>
+  <a href="#lista" class="btn btn-primary nav-cta">Entrar na lista</a>
+  <button class="nav-burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HERO -->
@@ -518,6 +545,25 @@ async function handleFlowSubmit(event) {
     alert('Erro de conexão. Verifique sua internet e tente novamente.');
   }
 }
+
+// Menu mobile (hambúrguer)
+(function () {
+  var burger = document.querySelector('.nav-burger');
+  var links = document.querySelector('.nav-links');
+  if (!burger || !links) return;
+  burger.addEventListener('click', function () {
+    var open = links.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  links.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      links.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
 </script>
 
 </body>
