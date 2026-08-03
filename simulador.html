@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintra Flow — Simulador de retorno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Paleta alinhada ao site da Sintra (fundo transparente para embutir na página do Flow) */
+  :root{ --elec:#1d6bfe; --mid:#0b3aa0; --line:rgba(255,255,255,0.08); --txt2:#7b8fc4; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{min-height:100%;}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif; background:#050810; color:#eef2ff; padding:0;}
+
+  .tag{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:#7FB0FF;background:rgba(29,107,254,.12);border:1px solid rgba(29,107,254,.28);
+    padding:5px 12px;border-radius:99px;margin-bottom:14px;}
+  h1{font-weight:800;font-size:clamp(24px,3.2vw,38px);letter-spacing:-0.02em;line-height:1.1;max-width:18ch;}
+  h1 b{background:linear-gradient(100deg,#5ba8ff,#1d6bfe);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .subt{color:var(--txt2);margin-top:12px;font-size:15px;max-width:52ch;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:30px;align-items:start;}
+  @media(max-width:820px){.grid{grid-template-columns:1fr;}}
+
+  .card{background:rgba(29,107,254,.04);border:1px solid var(--line);border-radius:18px;padding:26px 24px;}
+  .card h2{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--txt2);margin-bottom:18px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13.5px;color:#cdd7ea;margin-bottom:7px;font-weight:500;}
+  .field input,.field select{width:100%;height:44px;background:rgba(255,255,255,0.02);border:1px solid var(--line);
+    border-radius:10px;color:#fff;font-size:15px;font-family:inherit;padding:0 13px;outline:none;transition:border .15s;}
+  .field input:focus,.field select:focus{border-color:var(--elec);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+  .result{display:flex;flex-direction:column;gap:14px;}
+  .rhero{background:linear-gradient(150deg,#2b7bff 0%,#1d6bfe 45%,#0b3aa0 100%);border-radius:18px;padding:24px 26px;
+    box-shadow:0 30px 70px -22px rgba(29,107,254,.55);}
+  .rhero .lbl{font-size:13px;color:#d6e4ff;font-weight:500;}
+  .rhero .big{font-size:clamp(32px,4.2vw,50px);font-weight:800;letter-spacing:-0.02em;margin-top:2px;}
+  .rhero .big small{font-size:18px;font-weight:600;color:#d6e4ff;}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .stat{background:rgba(29,107,254,.04);border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+  .stat .lbl{font-size:12.5px;color:var(--txt2);}
+  .stat .val{font-size:23px;font-weight:700;margin-top:3px;}
+  .val.pos{color:#4ade80;}
+  .payback{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.22);border-radius:14px;padding:15px 18px;font-size:14.5px;color:#bfefd8;}
+  .payback b{color:#7BF0BE;}
+  .ctx{font-size:13px;color:var(--txt2);margin-top:2px;line-height:1.5;}
+  .prem{font-size:11.5px;color:#5c6f96;margin-top:6px;line-height:1.5;}
+  .cta{margin-top:6px;display:inline-flex;align-items:center;gap:8px;background:var(--elec);color:#fff;font-weight:700;
+    font-size:15px;border:none;border-radius:12px;padding:13px 22px;cursor:pointer;align-self:flex-start;
+    box-shadow:0 0 24px rgba(29,107,254,.35);transition:box-shadow .2s,transform .2s;font-family:inherit;}
+  .cta:hover{box-shadow:0 0 40px rgba(29,107,254,.55);transform:translateY(-2px);}
+</style>
+</head>
+<body>
+  <span class="tag">Simulador de retorno</span>
+  <h1>Quanto o Sintra Flow <b>gera pra você</b> todo mês</h1>
+  <p class="subt">Com os seus próprios números. Estimativa conservadora — feita pra você bater ou superar, não pra impressionar.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Seus números</h2>
+      <div class="field"><label>Seu nicho</label>
+        <select id="nicho">
+          <option value="grafica" selected>Gráfica / papelaria</option>
+          <option value="construcao">Material de construção</option>
+          <option value="autopecas">Autopeças / peças</option>
+          <option value="roupas">Loja de roupas / moda</option>
+          <option value="calcados">Calçados</option>
+          <option value="moveis">Móveis / decoração</option>
+          <option value="eletronicos">Eletrônicos / celulares</option>
+          <option value="otica">Ótica</option>
+          <option value="cosmeticos">Cosméticos / perfumaria</option>
+          <option value="doceria">Doceria / confeitaria</option>
+          <option value="distribuidora">Distribuidora / atacado</option>
+          <option value="agro">Agropecuária / insumos</option>
+          <option value="vidracaria">Vidraçaria / marmoraria</option>
+          <option value="loja">Loja / varejo em geral</option>
+          <option value="outro">Outro</option>
+        </select>
+      </div>
+      <div class="field"><label>Atendimentos por dia no WhatsApp</label><input id="atdia" type="number" min="0" value="50"></div>
+      <div class="field"><label>Quantas pessoas respondem esse WhatsApp hoje?</label><input id="pessoas" type="number" min="0" value="2"></div>
+      <div class="field"><label id="lblTicket">Ticket médio (R$)</label><input id="ticket" type="number" min="0" value="150"></div>
+      <div class="row2">
+        <div class="field"><label id="lblConv">% que vira venda hoje</label><input id="conv" type="number" min="0" max="100" value="30"></div>
+        <div class="field"><label>% que você perde por demora / fora do horário</label><input id="perda" type="number" min="0" max="100" value="20"></div>
+      </div>
+    </div>
+
+    <div class="result">
+      <div class="rhero">
+        <div class="lbl">Receita recuperada estimada</div>
+        <div class="big" id="rReceita">R$ 0 <small>/mês</small></div>
+      </div>
+      <div class="mini">
+        <div class="stat"><div class="lbl">Em 12 meses</div><div class="val pos" id="rAno">R$ 0</div></div>
+        <div class="stat"><div class="lbl" id="lblVendas">Vendas a mais / mês</div><div class="val" id="rVendas">0</div></div>
+      </div>
+      <div class="payback">O Sintra Flow se paga com uma <b>fração</b> do que você recupera aí em cima. O plano certo pro seu volume a gente monta junto.</div>
+      <div class="stat"><div class="lbl">Seu time hoje</div><div class="ctx" id="rTime"></div></div>
+      <p class="prem">Estimativa conservadora, com os seus números: recupera metade do que hoje se perde por demora/fora do horário; base de 26 dias de atendimento por mês.</p>
+      <button class="cta" id="simCta">Quero ver na minha empresa →</button>
+    </div>
+  </div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  /* Premissas provisórias — confirmar com o Rafael antes de publicar (custo real da IA). */
+  var DIAS=26, RECUP=0.5, SAL=1800;
+  var brl=function(n){return 'R$ '+Math.round(n).toLocaleString('pt-BR');};
+  var cap=function(s){return s.charAt(0).toUpperCase()+s.slice(1);};
+  var NICHOS={
+    grafica:{t:80,u:'pedido',tl:'Valor médio do pedido (R$)'},
+    construcao:{t:200,u:'pedido',tl:'Valor médio do pedido (R$)'},
+    autopecas:{t:150,u:'venda',tl:'Ticket médio (R$)'},
+    roupas:{t:120,u:'venda',tl:'Ticket médio (R$)'},
+    calcados:{t:130,u:'venda',tl:'Ticket médio (R$)'},
+    moveis:{t:600,u:'venda',tl:'Ticket médio (R$)'},
+    eletronicos:{t:400,u:'venda',tl:'Ticket médio (R$)'},
+    otica:{t:350,u:'venda',tl:'Ticket médio (R$)'},
+    cosmeticos:{t:90,u:'venda',tl:'Ticket médio (R$)'},
+    doceria:{t:120,u:'encomenda',tl:'Valor médio da encomenda (R$)'},
+    distribuidora:{t:400,u:'pedido',tl:'Valor médio do pedido (R$)'},
+    agro:{t:300,u:'pedido',tl:'Valor médio do pedido (R$)'},
+    vidracaria:{t:400,u:'orçamento',tl:'Valor médio do orçamento (R$)'},
+    loja:{t:150,u:'venda',tl:'Ticket médio (R$)'},
+    outro:{t:150,u:'venda',tl:'Ticket médio (R$)'}
+  };
+  var uni='venda';
+  function setNicho(){
+    var c=NICHOS[$('nicho').value]||NICHOS.outro;
+    uni=c.u;
+    $('ticket').value=c.t;
+    $('lblTicket').textContent=c.tl;
+    $('lblConv').textContent='% que vira '+uni+' hoje';
+    $('lblVendas').textContent=cap(uni)+'s a mais / mês';
+    calc();
+  }
+  function calc(){
+    var atDia=+$('atdia').value||0, pessoas=+$('pessoas').value||0, ticket=+$('ticket').value||0;
+    var conv=(+$('conv').value||0)/100, perda=(+$('perda').value||0)/100;
+    var atMes=atDia*DIAS;
+    var recVendas=atMes*perda*RECUP*conv;
+    var receita=recVendas*ticket;
+    $('rReceita').innerHTML=brl(receita)+' <small>/mês</small>';
+    $('rAno').textContent=brl(receita*12);
+    $('rVendas').textContent=Math.round(recVendas)+' '+uni+'s';
+    $('rTime').textContent = pessoas>0 ? (pessoas+' pessoa(s) nesse WhatsApp hoje (~'+brl(pessoas*SAL)+'/mês). A IA soma a elas, atendendo 24h em paralelo.') : 'A IA atende 24h, sem parar.';
+  }
+  $('nicho').addEventListener('change',setNicho);
+  ['atdia','pessoas','ticket','conv','perda'].forEach(function(id){ $(id).addEventListener('input',calc); });
+  // CTA leva à lista de espera na página do Flow (mesma origem)
+  $('simCta').addEventListener('click',function(){
+    try{ parent.document.getElementById('lista').scrollIntoView({behavior:'smooth'}); }
+    catch(e){ try{ parent.location.hash='lista'; }catch(_){} }
+  });
+  setNicho();
+})();
+</script>
+</body>
+</html>
