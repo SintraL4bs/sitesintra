@@ -49,20 +49,23 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #050810;
-      --bg2: #080d18;
-      --bg3: #0c1428;
-      --surface: rgba(29,107,254,0.04);
-      --surface2: rgba(29,107,254,0.07);
-      --border: rgba(255,255,255,0.07);
-      --border2: rgba(29,107,254,0.3);
-      --purple: #1d6bfe;
-      --cyan: #5ba8ff;
+      --bg: #020B1F;
+      --bg2: #06142F;
+      --bg3: #0b2148;
+      --surface: rgba(23,107,255,0.05);
+      --surface2: rgba(23,107,255,0.09);
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(23,107,255,0.35);
+      --purple: #176BFF;
+      --mid: #1248A8;
+      --cyan: #5AA0FF;
       --green: #4ade80;
-      --text: #eef2ff;
-      --text2: #7b8fc4;
-      --text3: #3a4d7a;
-      --grad: linear-gradient(135deg, #1d6bfe, #5ba8ff);
+      --text: #E9EEF7;
+      --text2: #9FB0CE;
+      --text3: #55688f;
+      --grad: linear-gradient(135deg, #176BFF, #1248A8);
+      --grad-txt: linear-gradient(100deg, #5AA0FF, #176BFF);
+      --glass: rgba(255,255,255,0.045);
     }
 
     html { scroll-behavior: smooth; }
@@ -71,7 +74,7 @@
     a { color: inherit; }
 
     .container { max-width: 1000px; margin: 0 auto; padding: 0 28px; }
-    .gt { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gt { background: var(--grad-txt); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
     .badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -260,6 +263,81 @@
     @media (prefers-reduced-motion: reduce) {
       .badge-beta .badge-dot { animation: none; }
     }
+
+    /* ===== REFORMA PREMIUM ===== */
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.vis { opacity: 1; transform: none; }
+
+    /* Hover glow nos cards */
+    .vp, .who, .tech-card, .demo-card, .naoe {
+      transition: border-color .25s, transform .25s, box-shadow .25s, background .25s;
+    }
+    .vp:hover, .who:hover, .tech-card:hover, .demo-card:hover {
+      border-color: var(--border2); transform: translateY(-5px);
+      box-shadow: 0 22px 50px -24px rgba(23,107,255,.55);
+      background: var(--surface2);
+    }
+
+    /* Glassmorphism */
+    .glass { background: var(--glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.09); }
+
+    /* Ícones de linha */
+    .ico { width: 30px; height: 30px; stroke: var(--purple); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .ico-sm { width: 24px; height: 24px; }
+
+    /* Diamantes 3D glossy flutuantes */
+    .diamonds { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+    .diamond {
+      position: absolute; border-radius: 9px;
+      background: linear-gradient(135deg, #6FB0FF 0%, #176BFF 48%, #1248A8 100%);
+      box-shadow: 0 24px 55px -14px rgba(23,107,255,.65), inset 0 2px 10px rgba(255,255,255,.4);
+      transform: rotate(45deg); opacity: .85;
+    }
+    .diamond::after { content: ""; position: absolute; inset: 0; border-radius: 9px;
+      background: linear-gradient(135deg, rgba(255,255,255,.6), transparent 45%); }
+    @keyframes floaty { 0%,100% { transform: rotate(45deg) translateY(0); } 50% { transform: rotate(45deg) translateY(-18px); } }
+    .hero .container, .hero .flow-lockup, .hero .badge, .hero h1, .hero .sub, .hero-cta { position: relative; z-index: 2; }
+
+    /* Motivo pontilhado (nós) */
+    .dots-bg { background-image: radial-gradient(rgba(159,176,206,.10) 1px, transparent 1px); background-size: 22px 22px; }
+
+    /* VEJA FUNCIONANDO (demo) */
+    .demo-badge { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--green); background:rgba(74,222,128,.08); border:1px solid rgba(74,222,128,.28); padding:6px 14px; border-radius:100px; }
+    .demo-grid { display:grid; grid-template-columns: 0.85fr 1.15fr; gap:22px; margin-top:34px; align-items:stretch; }
+    .demo-card { border:1px solid var(--border); border-radius:20px; padding:18px; background:var(--surface); display:flex; flex-direction:column; }
+    .demo-card .cap { font-size:13px; color:var(--text2); margin-bottom:12px; font-weight:600; }
+    .demo-ph { flex:1; border-radius:14px; border:1px dashed var(--border2); background:linear-gradient(160deg, rgba(23,107,255,.10), rgba(6,20,47,.4)); display:flex; align-items:center; justify-content:center; text-align:center; color:var(--text3); font-size:13px; min-height:300px; padding:24px; }
+    .phone .demo-ph { min-height:420px; border-radius:26px; }
+
+    /* NÃO É GAMBIARRA (tech/segurança) */
+    .tech { background: linear-gradient(180deg, var(--bg2), var(--bg)); }
+    .tech-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; margin-top:34px; }
+    .tech-card { border:1px solid var(--border); border-radius:16px; padding:26px 24px; }
+    .tech-ico { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:rgba(23,107,255,.12); border:1px solid var(--border2); margin-bottom:16px; }
+    .tech-card h3 { font-size:17px; font-weight:700; margin-bottom:8px; }
+    .tech-card p { color:var(--text2); font-size:14px; }
+    .meta-seal { display:inline-flex; align-items:center; gap:8px; margin-top:24px; font-size:13px; color:var(--text2); background:var(--surface); border:1px solid var(--border); border-radius:100px; padding:8px 16px; }
+
+    /* PRA QUEM É + NÃO É PRA VOCÊ */
+    .who-cols { display:grid; grid-template-columns: 1.4fr 1fr; gap:22px; margin-top:32px; align-items:start; }
+    .who-ico { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; background:rgba(23,107,255,.1); border:1px solid var(--border2); margin:0 auto; }
+    .naoe { border:1px solid rgba(255,107,107,.22); border-radius:16px; background:rgba(255,107,107,.04); padding:26px 24px; }
+    .naoe h3 { font-size:16px; font-weight:700; margin-bottom:6px; }
+    .naoe .sub { color:var(--text2); font-size:13.5px; margin-bottom:16px; }
+    .naoe-list { list-style:none; display:flex; flex-direction:column; gap:12px; }
+    .naoe-list li { display:flex; gap:11px; align-items:flex-start; font-size:14px; color:var(--text); }
+    .naoe-list .x { color:#ff7676; flex-shrink:0; margin-top:2px; }
+    .naoe .foot { color:var(--text2); font-size:13px; margin-top:16px; line-height:1.5; }
+
+    @media (max-width: 860px) {
+      .demo-grid, .tech-grid, .who-cols { grid-template-columns: 1fr; }
+      .diamonds { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .diamond { animation: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -286,6 +364,12 @@
 
 <!-- HERO -->
 <header class="hero">
+  <div class="diamonds" aria-hidden="true">
+    <span class="diamond" style="width:72px;height:72px;top:120px;left:8%;animation:floaty 6s ease-in-out infinite"></span>
+    <span class="diamond" style="width:46px;height:46px;top:200px;right:11%;opacity:.72;animation:floaty 5s ease-in-out infinite .6s"></span>
+    <span class="diamond" style="width:26px;height:26px;top:96px;right:26%;opacity:.55;animation:floaty 4.4s ease-in-out infinite 1s"></span>
+    <span class="diamond" style="width:36px;height:36px;bottom:54px;left:17%;opacity:.6;animation:floaty 5.4s ease-in-out infinite .3s"></span>
+  </div>
   <div class="container">
     <div class="flow-lockup" style="display:inline-flex;align-items:center;gap:13px;margin-bottom:26px" aria-label="Sintra Flow">
       <svg viewBox="27 16 45 70" height="46" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
@@ -354,6 +438,60 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- VEJA FUNCIONANDO -->
+<section class="block" id="veja">
+  <div class="container">
+    <span class="demo-badge"><span class="badge-dot" style="background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.7)"></span>Produto pronto, já funcionando — entrando em beta agora</span>
+    <h2 style="font-size:clamp(24px,3.6vw,34px);font-weight:800;margin-top:16px">Veja o Flow funcionando de verdade.</h2>
+    <p class="lead">Não é maquete nem promessa: é o produto rodando. Uma conversa real cotando preço no WhatsApp e o painel de acompanhamento em funcionamento.</p>
+    <div class="demo-grid">
+      <div class="demo-card phone">
+        <div class="cap">Conversa no WhatsApp — a IA cotando um preço</div>
+        <div class="demo-ph">[ print da conversa aqui ]</div>
+      </div>
+      <div class="demo-card">
+        <div class="cap">Painel do Flow — rodando ao vivo</div>
+        <div class="demo-ph">[ print do painel aqui ]</div>
+      </div>
+    </div>
+    <p style="margin-top:22px;font-size:13px;color:var(--text3);text-align:center">Demonstração do produto, não é caso de cliente — o Flow está entrando em beta agora com as primeiras lojas piloto.</p>
+  </div>
+</section>
+
+<!-- NÃO É GAMBIARRA (tecnologia e segurança) -->
+<section class="block tech dots-bg" id="tecnologia">
+  <div class="container">
+    <div class="eyebrow">Tecnologia e segurança</div>
+    <h2 style="font-size:clamp(24px,3.6vw,34px);font-weight:800">Não é gambiarra.</h2>
+    <p class="lead">Por baixo de um atendimento simples tem infraestrutura séria — feita pra não te dar dor de cabeça.</p>
+    <div class="tech-grid">
+      <div class="tech-card glass">
+        <div class="tech-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5z"/><path d="M8.5 10.5l2 2 4-4"/></svg></div>
+        <h3>API oficial do WhatsApp (Meta)</h3>
+        <p>Roda pela plataforma oficial da Meta (Meta Developers). Sem chip clonado, sem número de terceiro — sem risco de ban.</p>
+      </div>
+      <div class="tech-card glass">
+        <div class="tech-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4"/><path d="M15 8l4 4-4 4"/></svg></div>
+        <h3>Código 100% próprio</h3>
+        <p>Desenvolvido pela Sintra do zero. Não é revenda nem white-label de bot de prateleira.</p>
+      </div>
+      <div class="tech-card glass">
+        <div class="tech-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M4 4h8l8 8-8 8-8-8V4z"/><circle cx="8.5" cy="8.5" r="1.3"/></svg></div>
+        <h3>Preço determinístico</h3>
+        <p>O valor vem da tabela da loja, calculado — nunca inventado pela IA. Inclusive orçamento por m² ou por metro.</p>
+      </div>
+      <div class="tech-card glass">
+        <div class="tech-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Segurança testada</h3>
+        <p>Passou por três rodadas de teste de invasão (pentest), aprovado depois de corrigir o que foi encontrado. Novas ondas em andamento por precaução.</p>
+      </div>
+    </div>
+    <div class="meta-seal"><svg class="ico ico-sm" viewBox="0 0 24 24" style="stroke:var(--cyan)"><path d="M20 7L9 18l-5-5"/></svg> Construído sobre a plataforma oficial Meta for Developers</div>
+  </div>
+</section>
+
 <!-- O QUE NÃO FAZ -->
 <section class="block">
   <div class="container">
@@ -373,16 +511,47 @@
 
 <div class="divider"></div>
 
-<!-- PRA QUEM É -->
-<section class="block">
+<!-- PRA QUEM É + NÃO É PRA VOCÊ -->
+<section class="block" id="pra-quem">
   <div class="container">
     <div class="eyebrow">Pra quem é</div>
     <h2 style="font-size:clamp(24px,3.6vw,34px);font-weight:800">Pequenos negócios que vendem pelo WhatsApp.</h2>
     <p class="lead">Feito para quem tem um catálogo com preço e prazo e responde as mesmas perguntas o dia inteiro.</p>
-    <div class="who-grid">
-      <div class="who"><div class="emoji">🍰</div><h3>Confeitarias e docerias</h3><p>Encomendas, tabelas de bolos e docinhos, prazos de produção.</p></div>
-      <div class="who"><div class="emoji">🖨️</div><h3>Gráficas rápidas</h3><p>Orçamento por material, quantidade e prazo de entrega.</p></div>
-      <div class="who"><div class="emoji">🛍️</div><h3>Comércio de bairro</h3><p>Lojas de encomenda e vendas recorrentes por WhatsApp.</p></div>
+    <div class="who-cols">
+      <div class="who-grid" style="grid-template-columns:1fr;gap:12px;margin-top:0">
+        <div class="who" style="text-align:left;display:flex;gap:14px;align-items:center;padding:18px 20px">
+          <div class="who-ico" style="margin:0;width:46px;height:46px;flex-shrink:0">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M12 3v3"/><path d="M4 21h16"/><path d="M5 21v-7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"/><path d="M5 15c1.5 0 1.5 1.5 3 1.5s1.5-1.5 3-1.5 1.5 1.5 3 1.5 1.5-1.5 3-1.5"/></svg>
+          </div>
+          <div><h3 style="margin-top:0">Confeitarias e docerias</h3><p style="margin-top:4px">Encomendas, tabelas de bolos e docinhos, prazos de produção.</p></div>
+        </div>
+        <div class="who" style="text-align:left;display:flex;gap:14px;align-items:center;padding:18px 20px">
+          <div class="who-ico" style="margin:0;width:46px;height:46px;flex-shrink:0">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M7 9V4h10v5"/><rect x="4" y="9" width="16" height="7" rx="2"/><rect x="7" y="14" width="10" height="6" rx="1"/><path d="M16.5 12h.01"/></svg>
+          </div>
+          <div><h3 style="margin-top:0">Gráficas rápidas</h3><p style="margin-top:4px">Orçamento por material, quantidade e prazo de entrega.</p></div>
+        </div>
+        <div class="who" style="text-align:left;display:flex;gap:14px;align-items:center;padding:18px 20px">
+          <div class="who-ico" style="margin:0;width:46px;height:46px;flex-shrink:0">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M6 8h12l-1 11a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 8z"/><path d="M9.5 8V6.5a2.5 2.5 0 0 1 5 0V8"/></svg>
+          </div>
+          <div><h3 style="margin-top:0">Comércio de bairro</h3><p style="margin-top:4px">Lojas de encomenda e vendas recorrentes por WhatsApp.</p></div>
+        </div>
+      </div>
+
+      <div class="naoe">
+        <div class="who-ico" style="margin:0 0 14px;background:rgba(255,107,107,.08);border-color:rgba(255,107,107,.25)">
+          <svg class="ico" viewBox="0 0 24 24" style="stroke:#ff7676"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/><path d="M10 13l4 4M14 13l-4 4"/></svg>
+        </div>
+        <h3>Não é pra você se…</h3>
+        <p class="sub">o seu WhatsApp é pra <b>marcar horário</b>, não pra vender produto.</p>
+        <ul class="naoe-list">
+          <li><span class="x">✕</span> Clínicas e consultórios</li>
+          <li><span class="x">✕</span> Salões e barbearias</li>
+          <li><span class="x">✕</span> Estética e estúdios</li>
+        </ul>
+        <p class="foot">O Flow cota preço e prazo de catálogo — ele <b>não faz agenda</b>. Se o seu negócio é agendamento, preferimos te dizer isso agora do que te vender o que não serve.</p>
+      </div>
     </div>
     <p class="who-close">Se você responde as mesmas perguntas de preço e prazo o dia inteiro, o Flow foi feito pra isso.</p>
   </div>
@@ -447,7 +616,7 @@
         <div id="flow-success">
           <div class="check">✓</div>
           <h3 style="font-size:22px;font-weight:800;margin-bottom:10px">Prontinho! Você está na lista.</h3>
-          <p style="color:var(--text2);font-size:15px;max-width:340px;margin:0 auto">A gente te chama assim que abrir uma vaga. 🎉</p>
+          <p style="color:var(--text2);font-size:15px;max-width:340px;margin:0 auto">A gente te chama assim que abrir uma vaga.</p>
         </div>
       </div>
     </div>
@@ -580,6 +749,25 @@ async function handleFlowSubmit(event) {
       burger.setAttribute('aria-expanded', 'false');
     });
   });
+})();
+
+// Reveal no scroll + cascata (stagger)
+(function () {
+  try {
+    document.querySelectorAll('.vp-grid, .who-cols .who-grid, .tech-grid, .demo-grid').forEach(function (g) {
+      Array.prototype.forEach.call(g.children, function (c, i) { c.classList.add('reveal'); c.style.transitionDelay = (i * 0.08) + 's'; });
+    });
+    document.querySelectorAll('.block > .container > .eyebrow, .block > .container > h2, .block > .container > .lead, .block > .container > .demo-badge, .problem-card, .notdo, .naoe, .who-close, .meta-seal, .wait-copy, .form-wrap, .faq details, .final .container > *').forEach(function (e) { e.classList.add('reveal'); });
+    var els = document.querySelectorAll('.reveal');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('vis'); }); return; }
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('vis'); io.unobserve(x.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    els.forEach(function (e) { io.observe(e); });
+  } catch (err) {
+    document.querySelectorAll('.reveal').forEach(function (e) { e.classList.add('vis'); });
+  }
 })();
 </script>
 
