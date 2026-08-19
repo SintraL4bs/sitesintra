@@ -557,23 +557,6 @@
   </div>
 </section>
 
-<!-- SIMULADOR DE ROI -->
-<div class="divider"></div>
-<section class="block" id="simulador">
-  <div class="container">
-    <iframe id="sim-frame" src="/simulador" title="Simulador de retorno do Sintra Flow" style="width:100%;border:0;overflow:hidden;display:block" scrolling="no"></iframe>
-  </div>
-</section>
-<script>
-(function(){
-  var f=document.getElementById('sim-frame'); if(!f) return;
-  function fit(){ try{ var d=f.contentWindow.document; f.style.height=(d.body.scrollHeight+2)+'px'; }catch(e){} }
-  f.addEventListener('load',function(){ fit(); setTimeout(fit,300);
-    try{ new ResizeObserver(fit).observe(f.contentWindow.document.body); }catch(e){} });
-  window.addEventListener('resize',fit);
-})();
-</script>
-
 <!-- LISTA DE ESPERA -->
 <section class="block wait" id="lista">
   <div class="container">
