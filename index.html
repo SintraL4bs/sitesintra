@@ -289,6 +289,8 @@
     .svc-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--grad); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px; position: relative; }
     .proj-logo { height: 100px; border-radius: 12px; background: #fff; display: flex; align-items: center; justify-content: center; padding: 14px 22px; margin-bottom: 20px; position: relative; }
     .proj-logo img { max-height: 100%; max-width: 100%; width: auto; object-fit: contain; display: block; }
+    .proj-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 768px) { .proj-grid { grid-template-columns: 1fr; } }
     .svc-card h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; position: relative; }
     .svc-card p { font-size: 14px; color: var(--text2); line-height: 1.65; position: relative; }
     .svc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; position: relative; }
@@ -396,6 +398,13 @@
     .contact-info { display: flex; flex-direction: column; gap: 12px; }
     .ci { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text2); }
     .ci-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(29,107,254,0.1); border: 1px solid rgba(29,107,254,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .fn-icon svg { width: 16px; height: 16px; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .fn-icon.purple svg { stroke: #6ea6ff; }
+    .fn-icon.cyan svg { stroke: #7bc0ff; }
+    .fn-icon.green svg { stroke: #5ee08f; }
+    .fn-icon.orange svg { stroke: #ffb066; }
+    .ci-icon svg { width: 19px; height: 19px; fill: none; stroke: #5ba8ff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .ps-meta svg { width: 14px; height: 14px; vertical-align: -2px; margin-right: 5px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
     .form { display: flex; flex-direction: column; gap: 16px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .form-group { display: flex; flex-direction: column; gap: 7px; }
@@ -620,22 +629,22 @@
         <div class="flow-nodes">
           <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.07em;">Diagnóstico, Em andamento</div>
           <div class="fn">
-            <div class="fn-icon purple">💬</div>
+            <div class="fn-icon purple"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H8l-4 4V5z"/></svg></div>
             <div class="fn-label"><strong>Como é feito o atendimento hoje?</strong><span>WhatsApp manual, sem automação</span></div>
             <div class="fn-status status-done">✓ Mapeado</div>
           </div>
           <div class="fn">
-            <div class="fn-icon cyan">📉</div>
+            <div class="fn-icon cyan"><svg viewBox="0 0 24 24"><path d="M4 5v14h16"/><path d="M19 8l-5 5-3-3-4 4"/></svg></div>
             <div class="fn-label"><strong>Quantos leads perdem por demora?</strong><span>~40% sem retorno em 24h</span></div>
             <div class="fn-status status-done">✓ Mapeado</div>
           </div>
           <div class="fn">
-            <div class="fn-icon green">🔁</div>
+            <div class="fn-icon green"><svg viewBox="0 0 24 24"><path d="M17 3l3 3-3 3"/><path d="M4 11V9a3 3 0 0 1 3-3h13"/><path d="M7 21l-3-3 3-3"/><path d="M20 13v2a3 3 0 0 1-3 3H4"/></svg></div>
             <div class="fn-label"><strong>Processos feitos manualmente?</strong><span>Agendamentos, follow-ups, relatórios</span></div>
             <div class="fn-status status-run">● Analisando</div>
           </div>
           <div class="fn">
-            <div class="fn-icon orange">🌐</div>
+            <div class="fn-icon orange"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16"/><path d="M12 4c2.6 2.7 2.6 13.3 0 16M12 4c-2.6 2.7-2.6 13.3 0 16"/></svg></div>
             <div class="fn-label"><strong>Presença digital atual?</strong><span>Aguardando resposta</span></div>
             <div class="fn-status status-wait">Em fila</div>
           </div>
@@ -655,25 +664,25 @@
         <div class="flow-nodes">
           <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.07em;">Plano de execução</div>
           <div class="fn">
-            <div class="fn-icon purple">🎯</div>
+            <div class="fn-icon purple"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></div>
             <div class="fn-label"><strong>Automação de atendimento</strong><span>Semana 1,Prioridade alta</span></div>
             <div class="fn-status status-done">✓ Definido</div>
           </div>
           <div class="fn-arrow">↓</div>
           <div class="fn">
-            <div class="fn-icon cyan">🔗</div>
+            <div class="fn-icon cyan"><svg viewBox="0 0 24 24"><path d="M9.5 14.5l5-5"/><path d="M11 6.5l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 17.5l-1 1a4 4 0 0 1-6-6l1-1"/></svg></div>
             <div class="fn-label"><strong>Integração WhatsApp + CRM</strong><span>Semana 2,Prioridade alta</span></div>
             <div class="fn-status status-done">✓ Definido</div>
           </div>
           <div class="fn-arrow">↓</div>
           <div class="fn">
-            <div class="fn-icon green">🌐</div>
+            <div class="fn-icon green"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16"/><path d="M12 4c2.6 2.7 2.6 13.3 0 16M12 4c-2.6 2.7-2.6 13.3 0 16"/></svg></div>
             <div class="fn-label"><strong>Site institucional</strong><span>Semana 3,Prioridade média</span></div>
             <div class="fn-status status-run">● Em análise</div>
           </div>
           <div class="fn-arrow">↓</div>
           <div class="fn">
-            <div class="fn-icon orange">🧪</div>
+            <div class="fn-icon orange"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v5.5L5.5 16A2 2 0 0 0 7.3 19h9.4a2 2 0 0 0 1.8-3L14 8.5V3"/><path d="M8 15h8"/></svg></div>
             <div class="fn-label"><strong>Testes e ajustes finais</strong><span>Semana 4</span></div>
             <div class="fn-status status-wait">Em fila</div>
           </div>
@@ -795,7 +804,7 @@
       <h2>Quem já <span class="gt">confia na Sintra.</span></h2>
       <p style="margin-left:auto;margin-right:auto">Negócios reais que colocamos no digital, do site à presença online que trabalha por eles.</p>
     </div>
-    <div class="services-grid" style="grid-template-columns:repeat(2,1fr);max-width:760px;margin:0 auto;">
+    <div class="services-grid proj-grid" style="max-width:760px;margin:0 auto;">
       <a href="https://www.inprintgrafica.com.br/" target="_blank" rel="noopener" class="svc-card fade-up" style="text-decoration:none;color:inherit;display:block;">
         <div class="proj-logo"><img src="img/inprint.png" alt="InPrint" loading="lazy" style="max-height:52px"></div>
         <p>Presença digital e site institucional para uma gráfica de Belo Horizonte, comunicando serviços e captando contato de forma clara.</p>
@@ -827,7 +836,7 @@
             <div class="ps-tag">DIAGNÓSTICO</div>
             <h3>Mapeamos onde está o gargalo.</h3>
             <p>60 minutos com a Sintra. Você sai com o escopo claro, onde a IA vai gerar mais retorno e o que vai ser entregue.</p>
-            <div class="ps-meta">⏱ 60 min, Sem custo, sem compromisso</div>
+            <div class="ps-meta"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg> 60 min, Sem custo, sem compromisso</div>
           </div>
           <div class="ps-visual">
             <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:8px;"><span class="live-dot">●</span> Diagnóstico em andamento</div>
@@ -842,7 +851,7 @@
             <div class="ps-tag">PROPOSTA</div>
             <h3>Escopo, prazo e ROI estimado.</h3>
             <p>Em até 48h você recebe uma proposta com o que será construído, quanto vai custar, quando vai ser entregue e o retorno esperado.</p>
-            <div class="ps-meta">📄 48 horas, Proposta detalhada com ROI</div>
+            <div class="ps-meta"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><path d="M9 13h6M9 17h5"/></svg> 48 horas, Proposta detalhada com ROI</div>
           </div>
           <div class="ps-visual" style="display:flex;flex-direction:column;gap:8px">
             <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text2)">Solução</span><span style="color:var(--text)">Automação de Atendimento</span></div>
@@ -858,7 +867,7 @@
             <div class="ps-tag">BUILD</div>
             <h3>Construímos e testamos com você.</h3>
             <p>Desenvolvimento iterativo com checkpoints semanais. Você vê o progresso em tempo real e aprova cada etapa antes de avançar.</p>
-            <div class="ps-meta">🛠 1 a 3 semanas, dependendo do escopo</div>
+            <div class="ps-meta"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg> 1 a 3 semanas, dependendo do escopo</div>
           </div>
           <div class="ps-visual">
             <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Progresso atual</div>
@@ -874,7 +883,7 @@
             <div class="ps-tag">VALIDAÇÃO</div>
             <h3>30 dias acompanhando os primeiros resultados.</h3>
             <p>Depois de entregar, ficamos 30 dias ajustando, corrigindo e garantindo que a solução está gerando o impacto esperado.</p>
-            <div class="ps-meta">✅ 30 dias, Suporte pós-entrega incluso</div>
+            <div class="ps-meta"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg> 30 dias, Suporte pós-entrega incluso</div>
           </div>
           <div class="ps-visual" style="display:flex;flex-direction:column;gap:8px">
             <div style="display:flex;gap:8px;align-items:center;font-size:12px"><span style="color:var(--green)">✓</span><span style="color:var(--text2)">Solução no ar e monitorada</span></div>
@@ -890,7 +899,7 @@
             <div class="ps-tag">EVOLUÇÃO</div>
             <h3>Cresce conforme o retorno aparece.</h3>
             <p>Para quem quer uma parceria contínua, evoluímos a solução, adicionamos novos fluxos e mantemos tudo funcionando.</p>
-            <div class="ps-meta">∞ Recorrente, Parceria estratégica mensal</div>
+            <div class="ps-meta"><svg viewBox="0 0 24 24"><path d="M7 9.5a2.5 2.5 0 1 0 0 5c1.7 0 2.5-2.5 5-2.5s3.3 2.5 5 2.5a2.5 2.5 0 1 0 0-5c-1.7 0-2.5 2.5-5 2.5s-3.3-2.5-5-2.5z"/></svg> Recorrente, Parceria estratégica mensal</div>
           </div>
           <div class="ps-visual">
             <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">Próximas evoluções</div>
@@ -1086,9 +1095,9 @@
         <h2>Comece pelo <span class="gt">diagnóstico.</span></h2>
         <p>60 minutos com a Sintra. Você sai com escopo, prazo e ROI estimado, sem custo, sem compromisso.</p>
         <div class="contact-info">
-          <div class="ci"><div class="ci-icon">📍</div>Belo Horizonte, MG, Atendimento nacional</div>
-          <div class="ci"><div class="ci-icon">⚡</div>Resposta em até 1 dia útil</div>
-          <div class="ci"><div class="ci-icon">🔒</div>Seus dados são tratados com sigilo e LGPD</div>
+          <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>Belo Horizonte, MG, Atendimento nacional</div>
+          <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M13 2L5 13h6l-1 9 9-12h-7l1-8z"/></svg></div>Resposta em até 1 dia útil</div>
+          <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>Seus dados são tratados com sigilo e LGPD</div>
         </div>
       </div>
       <div class="form-wrap fade-up fade-up-d1">
@@ -1130,7 +1139,7 @@
           <h3 style="font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-bottom:12px;">Diagnóstico agendado!</h3>
           <p style="color:var(--text2);font-size:15px;line-height:1.65;max-width:360px;margin:0 auto 24px;">Recebemos sua solicitação. A Sintra Labs entrará em contato em até 1 dia útil para confirmar o horário.</p>
           <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(29,107,254,0.1);border:1px solid rgba(29,107,254,0.25);border-radius:100px;padding:8px 20px;font-size:13px;color:#7ab8ff;font-weight:600;">
-            ⚡ Resposta em até 1 dia útil
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;vertical-align:-2px;margin-right:5px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M13 2L5 13h6l-1 9 9-12h-7l1-8z"/></svg>Resposta em até 1 dia útil
           </div>
         </div>
       </div>
