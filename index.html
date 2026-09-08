@@ -431,6 +431,13 @@
     .footer-links a { font-size: 13px; color: var(--text3); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--text2); }
     .footer-right { font-size: 12px; color: var(--text3); }
+    .legal { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+    .legal .info { font-size: 12.5px; color: var(--text3); line-height: 1.75; }
+    .legal .info span { display: block; }
+    .legal .info .rs { color: var(--text2); font-weight: 600; }
+    .legal .lks { display: flex; align-items: center; gap: 18px; }
+    .legal .lks a { font-size: 12.5px; color: var(--text3); text-decoration: none; transition: color 0.2s; }
+    .legal .lks a:hover { color: var(--text2); }
 
     /* ── ANIMATIONS ── */
     .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
@@ -549,6 +556,7 @@
       .contact-inner { grid-template-columns: 1fr; gap: 40px; }
       .form-row { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; text-align: center; }
+      .legal { flex-direction: column; align-items: center; text-align: center; }
       .footer-links { justify-content: center; }
       .cta-btns { flex-direction: column; align-items: center; }
     }
@@ -1172,7 +1180,12 @@
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
           </svg>
         </a>
-        <span>© 2026 Sintra Labs · BH, MG</span>
+      </div>
+    </div>
+    <div class="legal">
+      <div class="info">
+        <span>© 2026 Sintra Labs · <span class="rs">SINTRA LABS LIMITADA</span> · CNPJ 68.979.395/0001-50</span>
+        <span>Av. Francisco Sales, 1632, Loja 03 · Santa Efigênia · Belo Horizonte, MG · 30150-224</span>
       </div>
     </div>
   </div>
